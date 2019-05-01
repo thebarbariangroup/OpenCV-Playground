@@ -1,0 +1,29 @@
+@import 'base/normalize';
+
+body {
+  font-family: 'Helvetica-neue', 'Arial', sans-serif;
+  background-color: #000;
+  color: #FF0;
+}
+
+.image-groups {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-group {
+  flex: 0 0 50%;
+  position: relative;
+  max-width: 50%;
+  overflow: hidden; 
+
+  &_title {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
+
+  canvas, video {
+    width: 100%;
+  }
+}

@@ -1,5 +1,8 @@
-import Webcam from './Webcam';
-import CanvasOut from './CanvasOut';
+import Webcam     from './Webcam';
+import CanvasOut  from './CanvasOut';
+import transforms from './transforms';
+
+const TRANSFORM = transforms.threshold.inRange;
 
 document.body.addEventListener('OPENCV_BUILT', () => {
   cv['onRuntimeInitialized'] = () => {
@@ -14,7 +17,8 @@ document.body.addEventListener('OPENCV_BUILT', () => {
     const canvasOut = new CanvasOut({
       input: webcam,
       output: output,
-      data: data
+      data: data,
+      transform: TRANSFORM
     });
 
     webcam.initializeCamera()

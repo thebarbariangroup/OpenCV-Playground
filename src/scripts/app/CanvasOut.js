@@ -3,6 +3,9 @@ export default class CanvasOut {
     this.input = opts.input;
     this.output = opts.output;
     this.data = opts.data || this._getData();
+    this.transform = opts.transform || this._transformInput; // Pass in a transform, or use the method below for testing
+    this.transform = this.transform.bind(this);
+
     this.context = null;
 
     this.state = {
@@ -17,10 +20,12 @@ export default class CanvasOut {
   }
 
   streamInputToOutput (time) {
-    this._transformInput(time);
     this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
-    this.srcMat.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
+    this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
+    
+    this.transform(this.src, this.dst, time) || this.src;
 
+    cv.imshow(this.output, this.dst)
 
     requestAnimationFrame((time) => {
       this.streamInputToOutput(time);
@@ -37,8 +42,8 @@ export default class CanvasOut {
     this.data.width = this.state.width;
     this.data.height = this.state.height;
 
-    this.srcMat = new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
-    this.dstMat = new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
+    this.src = new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
+    this.dst = new cv.Mat(this.state.height, this.state.width, cv.CV_8UC1);
 
     this.context = this.data.getContext('2d');
   }
@@ -53,30 +58,9 @@ export default class CanvasOut {
   }
 
   _transformInput (time) {
-    // cv.cvtColor(this.srcMat, this.dstMat, cv.COLOR_RGBA2GRAY);
-
-    this.prevTime = this.prevTime || 0;
-    this.mask = this.mask || new cv.Mat();
-
-    const currentTime = time - this.prevTime;
-
-    if (currentTime > 3000) {
-      // this.mask = this.mask || cv.Mat.ones(640, 480, cv.CV_8UC4);
-
-      if (this.prevSrcMat) {
-        console.log(this.prevSrcMat.data[1], this.srcMat.data[1]);
-        cv.subtract(this.srcMat, this.prevSrcMat, this.dstMat);
-        console.log(this.dstMat.data[1]);
-      }
-
-      this.prevSrcMat = this.srcMat;
-      this.prevTime = time;
-
-      cv.imshow(this.output, this.dstMat)
-      // this.prevSrcMat.delete();
-      // this.srcMat.delete();
-      // this.dstMat.delete();
-    }
+    
+    cv.cvtColor(this.src, this.dst, cv.COLOR_RGBA2GRAY)
+    cv.threshold(this.dst, this.dst, 0, 250, cv.THRESH_OTSU);
 
   }
 }

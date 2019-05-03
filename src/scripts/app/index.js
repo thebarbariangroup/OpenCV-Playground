@@ -2,16 +2,16 @@ import Webcam     from './Webcam';
 import CanvasOut  from './CanvasOut';
 import transforms from './transforms';
 
-const TRANSFORM = transforms.threshold.inRange;
+const TRANSFORM = transforms.smooth.blur;
 
 document.body.addEventListener('OPENCV_BUILT', () => {
   cv['onRuntimeInitialized'] = () => {
-    const video  = document.getElementById('videoInput');
+    // const video  = document.getElementById('videoInput');
     const output = document.getElementById('canvasOutput');
     const data   = document.getElementById('data');
 
     const webcam = new Webcam({
-      output: video
+      // output: video
     });
     
     const canvasOut = new CanvasOut({

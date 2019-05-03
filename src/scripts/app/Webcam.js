@@ -1,7 +1,6 @@
 export default class Webcam {
   constructor (opts) {
-    this.output = opts.output;
-    this.input = this.getInput();
+    this.output = opts.output || this.getOutput();
     this.stream = null;
 
     this.state = {
@@ -9,12 +8,11 @@ export default class Webcam {
     };
   }
 
-  getInput () {
-    return this.input;
-  }
-
   getOutput () {
-      return this.output;
+    if (!this.output) {
+      this.output = document.createElement('video');
+    }
+    return this.output;
   }
 
   getWidth () {

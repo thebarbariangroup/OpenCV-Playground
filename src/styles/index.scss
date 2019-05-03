@@ -21,9 +21,11 @@ body {
     position: absolute;
     top: 1rem;
     left: 1rem;
+    z-index: 1;
   }
 
   canvas, video {
     width: 100%;
+    transform: scale(-1) rotateX(180deg);
   }
 }

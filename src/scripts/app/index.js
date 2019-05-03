@@ -2,7 +2,10 @@ import Webcam     from './Webcam';
 import CanvasOut  from './CanvasOut';
 import transforms from './transforms';
 
-const TRANSFORM = transforms.smooth.blur;
+const TRANSFORMS = [
+  transforms.threshold.inRange,
+  transforms.smooth.blur,
+];
 
 document.body.addEventListener('OPENCV_BUILT', () => {
   cv['onRuntimeInitialized'] = () => {
@@ -18,7 +21,7 @@ document.body.addEventListener('OPENCV_BUILT', () => {
       input: webcam,
       output: output,
       data: data,
-      transform: TRANSFORM
+      transforms: TRANSFORMS
     });
 
     webcam.initializeCamera()

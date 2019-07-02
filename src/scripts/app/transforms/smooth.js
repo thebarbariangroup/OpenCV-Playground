@@ -1,23 +1,32 @@
 // https://docs.opencv.org/3.4/dd/d6a/tutorial_js_filtering.html
 
 export default {
-  blur (src, dst) {
-    this.ksize = this.ksize || new cv.Size(20, 20);
-    this.anchor = this.anchor || new cv.Point(-1, -1);
+  blur (conf) {
+    return (src, dst) => {
+      this.ksize = this.ksize || new cv.Size(conf.kernel, conf.kernel);
+      this.anchor = this.anchor || new cv.Point(conf.anchor, conf.anchor);
 
-    cv.boxFilter(src, dst, -1, this.ksize, this.anchor, true, cv.BORDER_DEFAULT);
+      cv.boxFilter(src, dst, -1, this.ksize, this.anchor, true, cv.BORDER_DEFAULT);
+    }
   },
-  gaussian (src, dst) {
-    this.ksize = this.ksize || new cv.Size(7, 7); // must be an odd number
+  gaussian (conf) {
+    return (src, dst) => {
+      this.ksize = this.ksize || new cv.Size(conf.kernel, conf.kernel); // must be an odd number
 
-    cv.GaussianBlur(src, dst, this.ksize, 10, 10, cv.BORDER_DEFAULT);
+      cv.GaussianBlur(src, dst, this.ksize, 10, 10, cv.BORDER_DEFAULT);
+    }
   },
-  median (src, dst) {
-    cv.medianBlur(src, dst, 5); //last argument must be an odd number
+  median (conf) {
+    return (src, dst) => {
+      cv.medianBlur(src, dst, conf.kernel); //last argument must be an odd number
+    }
   },
-  bilateral (src, dst) {
-    cv.cvtColor(src, this.transformedSrc, cv.COLOR_RGBA2RGB);
+  bilateral (conf) {
+    return (src, dst) => {
+      this.bilateralSrc = this.bilateralSrc || new cv.Mat(src.rows, src.cols, cv.CV_8UC3);
+      cv.cvtColor(src, this.bilateralSrc, cv.COLOR_RGBA2RGB);
 
-    cv.bilateralFilter(this.transformedSrc, dst, 9, 75, 75, cv.BORDER_DEFAULT);
+      cv.bilateralFilter(this.bilateralSrc, dst, conf.size, conf.sigmaColor, conf.sigmaSpace, cv.BORDER_DEFAULT);
+    }
   }
 }

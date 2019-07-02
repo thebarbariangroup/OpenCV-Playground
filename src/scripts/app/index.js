@@ -2,7 +2,39 @@ import Webcam     from './Webcam';
 import CanvasOut  from './CanvasOut';
 import transforms from './transforms';
 
-const TRANSFORM = transforms.smooth.bilateral;
+
+const TRANSFORMS = [
+  // transforms.smooth.median({
+  //   kernel: 51,
+  //   anchor: -1
+  // }),
+  // transforms.smooth.bilateral({
+  //   size: 5,
+  //   sigmaColor: 200,
+  //   sigmaSpace: 200
+  // }),
+  // transforms.featureDetect.canny({
+  //   t1: 10,
+  //   t2: 10
+  // }),
+  transforms.threshold.inRange({
+    lo: 100,
+    hi: 255
+  }),
+  transforms.morph.close({
+    kernel: 10,
+    anchor: 100,
+    iterations: 5
+  }),
+  // transforms.smooth.blur({
+  //   kernel: 20,
+  //   anchor: -1
+  // }),
+  transforms.featureDetect.canny({
+    t1: 100,
+    t2: 100
+  }),
+];
 
 document.body.addEventListener('OPENCV_BUILT', () => {
   cv['onRuntimeInitialized'] = () => {
@@ -18,7 +50,7 @@ document.body.addEventListener('OPENCV_BUILT', () => {
       input: webcam,
       output: output,
       data: data,
-      transform: TRANSFORM
+      transforms: TRANSFORMS
     });
 
     webcam.initializeCamera()

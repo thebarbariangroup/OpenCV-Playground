@@ -4,7 +4,11 @@ import transforms from './transforms';
 
 const TRANSFORMS = [
   transforms.threshold.inRange,
+  transforms.featureDetect.canny,
   transforms.smooth.blur,
+  // transforms.smooth.blur,
+  // transforms.featureDetect.houghLines,
+  // transforms.featureDetect.houghLinesP,
 ];
 
 document.body.addEventListener('OPENCV_BUILT', () => {

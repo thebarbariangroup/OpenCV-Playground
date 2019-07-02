@@ -4,6 +4,7 @@ export default class CanvasOut {
     this.output = opts.output;
     this.data   = opts.data || this._getData();
     this.transforms = this._getTransforms(opts.transforms);
+    // this.ticking = false;
 
     this.context = null;
 
@@ -19,6 +20,11 @@ export default class CanvasOut {
   }
 
   streamInputToOutput (time) {
+    if (this.ticking) {
+      return;
+    }
+    this.ticking = true;
+
     this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
     this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
     
@@ -27,6 +33,7 @@ export default class CanvasOut {
     cv.imshow(this.output, this.dst);
 
     requestAnimationFrame((time) => {
+      this.ticking = false;
       this.streamInputToOutput(time);
     });
   }
@@ -41,9 +48,9 @@ export default class CanvasOut {
     this.data.width  = this.state.width;
     this.data.height = this.state.height;
 
-    this.src      = new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
-    this.srcProxy = new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
-    this.dst      = new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
+    this.src      = this._getBaseMat();
+    this.srcProxy = this._getBaseMat();
+    this.dst      = this._getBaseMat();
 
     this.context = this.data.getContext('2d');
   }
@@ -55,6 +62,10 @@ export default class CanvasOut {
     }
 
     return this.data;
+  }
+
+  _getBaseMat () {
+    return new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
   }
 
   _getTransforms (transforms = []) {
@@ -94,7 +105,7 @@ export default class CanvasOut {
 
   _transformInput (src, dst, time) {
     dst.data.set(src.data);
-    
+
     // cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY)
     // cv.threshold(dst, dst, 0, 250, cv.THRESH_OTSU);
 

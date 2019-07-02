@@ -2,7 +2,7 @@ import Webcam     from './Webcam';
 import CanvasOut  from './CanvasOut';
 import transforms from './transforms';
 
-const TRANSFORM = transforms.smooth.blur;
+const TRANSFORM = transforms.smooth.bilateral;
 
 document.body.addEventListener('OPENCV_BUILT', () => {
   cv['onRuntimeInitialized'] = () => {

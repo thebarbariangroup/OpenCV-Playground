@@ -6,13 +6,12 @@ export default {
     }
   },
   scharr (conf) {
-    // Cannot get this none to work. Not sure what the issue is.
+    // Cannot get this one to work. Not sure what the issue is.
     return (src, dst) => {
       cv.Scharr(src, dst, cv.CV_8U, conf.dx, conf.dy, conf.scale || 1, conf.delta || 0);
     }
   },
   laplacian (conf) {
-    // Cannot get this none to work. Not sure what the issue is.
     return (src, dst) => {
       cv.Laplacian(src, dst, cv.CV_8U, conf.ksize, conf.scale || 1, conf.delta || 0);
     }

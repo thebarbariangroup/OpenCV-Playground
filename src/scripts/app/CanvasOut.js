@@ -19,7 +19,7 @@ export default class CanvasOut {
     this.streamInputToOutput(0);
   }
 
-  streamInputToOutput (time) {
+  streamInputToOutput () {
     if (this.ticking) {
       return;
     }
@@ -28,13 +28,13 @@ export default class CanvasOut {
     this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
     this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
     
-    this._applyTransforms(time);
+    this._applyTransforms();
 
     cv.imshow(this.output, this.dst);
 
-    requestAnimationFrame((time) => {
+    requestAnimationFrame(() => {
       this.ticking = false;
-      this.streamInputToOutput(time);
+      this.streamInputToOutput();
     });
   }
 
@@ -70,21 +70,20 @@ export default class CanvasOut {
 
   _getTransforms (transforms = []) {
     transforms = transforms.map((transform) => {
-      
       return transform.bind(this);
     });
-    transforms.unshift(this._transformInput); // perpend the testing transform to the queue
+    transforms.unshift(this._copySrcToDst); // perpend a setup transform to the queue
 
     return transforms;
   }
 
-  _applyTransforms (time) {
+  _applyTransforms () {
     this.srcProxy.data.set(this.src.data); // set initial value for srcProxy.
 
     this.transforms.forEach((transform) => {
-      transform(this.srcProxy, this.dst, time); // apply transform
-      this._matchMatType(this.src, this.dst); // convert dst type to match src
-      this.srcProxy.data.set(this.dst.data); // srcProxy is set to dist from each transform, so they can chain their outputs together
+      transform(this.srcProxy, this.dst); // apply transform
+      this._matchMatType(this.srcProxy, this.dst); // convert dst type to match src
+      this.srcProxy.data.set(this.dst.data); // set srcProxy to dst, so tranforms can chain their outputs together
     });
   }
 
@@ -104,11 +103,7 @@ export default class CanvasOut {
     }
   }
 
-  _transformInput (src, dst, time) {
+  _copySrcToDst (src, dst) {
     dst.data.set(src.data);
-
-    // cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY)
-    // cv.threshold(dst, dst, 0, 250, cv.THRESH_OTSU);
-
   }
 }

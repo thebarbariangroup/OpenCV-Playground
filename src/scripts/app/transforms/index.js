@@ -4,6 +4,7 @@ import smooth from './smooth';
 import featureDetect from './featureDetect';
 import morph from './morph';
 import imageGradient from './imageGradient';
+import alter from './alter';
 
 export default {
   arithmetic,
@@ -11,5 +12,6 @@ export default {
   smooth,
   featureDetect,
   morph,
-  imageGradient
+  imageGradient,
+  alter,
 };

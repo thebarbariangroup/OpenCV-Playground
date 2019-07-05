@@ -8,14 +8,26 @@ const TRANSFORMS = [
   //   lo: 100,
   //   hi: 255,
   // }),
+  transforms.smooth.median({
+    kernel: 5,
+  }),
+  // transforms.featureDetect.canny({
+  //   t1: 50,
+  //   t2: 50
+  // }),
   transforms.imageGradient.laplacian({
-    ksize: 3,
+    ksize: 5,
     scale: 1,
     delta: 0,
   }),
-  transforms.featureDetect.canny({
-    t1: 10,
-    t2: 10
+  // transforms.imageGradient.sobel({
+  //   dx: 3,
+  //   dy: 3,
+  //   ksize: 5,
+  // }),
+  transforms.alter.setChannel({
+    idx: 3,
+    val: 255,
   }),
 ];
 

@@ -4,7 +4,7 @@ import transforms from './transforms';
 
 
 const TRANSFORMS = [
-  transforms.alter.grayscale(),
+  // transforms.alter.grayscale(),
   transforms.smooth.median({
     kernel: 5,
   }),
@@ -17,26 +17,23 @@ const TRANSFORMS = [
   //   scale: 1,
   //   delta: 0,
   // }),
-  transforms.imageGradient.sobel({
-    dx: 2,
-    dy: 0,
+  // transforms.imageGradient.sobel({
+  //   dx: 2,
+  //   dy: 0,
+  //   ksize: 5,
+  // }),
+  transforms.threshold.adaptiveGaussian({
     ksize: 5,
+    c: 0,
   }),
+  // transforms.threshold.binary({
+  //   t1: 0,
+  //   t2: 255,
+  //   flag: 'otsu',
+  // }),
   transforms.alter.setChannel({
     idx: 3,
     val: 255,
-  }),
-  // transforms.morph.erode({
-  //   kernel: 1,
-  //   anchor: 0,
-  // }),
-  // transforms.morph.close({
-  //   kernel: 3,
-  //   anchor: 1,
-  // }),
-  transforms.threshold.inRange({
-    lo: 100,
-    hi: 255,
   }),
 ];
 

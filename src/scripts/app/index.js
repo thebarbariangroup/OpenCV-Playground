@@ -4,10 +4,7 @@ import transforms from './transforms';
 
 
 const TRANSFORMS = [
-  // transforms.threshold.inRange({
-  //   lo: 100,
-  //   hi: 255,
-  // }),
+  transforms.alter.grayscale(),
   transforms.smooth.median({
     kernel: 5,
   }),
@@ -15,19 +12,31 @@ const TRANSFORMS = [
   //   t1: 50,
   //   t2: 50
   // }),
-  transforms.imageGradient.laplacian({
-    ksize: 5,
-    scale: 1,
-    delta: 0,
-  }),
-  // transforms.imageGradient.sobel({
-  //   dx: 3,
-  //   dy: 3,
+  // transforms.imageGradient.laplacian({
   //   ksize: 5,
+  //   scale: 1,
+  //   delta: 0,
   // }),
+  transforms.imageGradient.sobel({
+    dx: 2,
+    dy: 0,
+    ksize: 5,
+  }),
   transforms.alter.setChannel({
     idx: 3,
     val: 255,
+  }),
+  // transforms.morph.erode({
+  //   kernel: 1,
+  //   anchor: 0,
+  // }),
+  // transforms.morph.close({
+  //   kernel: 3,
+  //   anchor: 1,
+  // }),
+  transforms.threshold.inRange({
+    lo: 100,
+    hi: 255,
   }),
 ];
 

@@ -1,5 +1,5 @@
 export default {
-  setChannel(conf) {
+  setChannel (conf) {
     // sets the channel at conf.idx to conf.val
     return (src, dst) => {
       this.newChannelMats = this.newChannelMats || {};
@@ -24,6 +24,11 @@ export default {
     // does nothing to mats with unsigned type
     return (src, dst) => {
       cv.convertScaleAbs(src, dst, 1, 0);
+    }
+  },
+  grayscale () {
+    return (src, dst) => {
+      cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
     }
   },
 }

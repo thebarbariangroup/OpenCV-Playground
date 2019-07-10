@@ -1,14 +1,17 @@
-export default class CanvasOut {
-  constructor (opts) {
-    this.input  = opts.input;
-    this.output = opts.output;
-    this.data   = opts.data || this._getData();
-    this.transforms = this._getTransforms(opts.transforms);
-    // this.ticking = false;
+import cacheController from './CacheController';
 
+export default class CanvasOut {
+  constructor (conf) {
+    this.input  = conf.input;
+    this.output = conf.output;
+    this.data   = conf.data || this._getData();
+    this.transforms = null; // transforms are set through setTransforms()
+    this.ticking = false;
+    
     this.context = null;
 
     this.state = {
+      streaming: false,
       width: 0,
       height: 0
     };
@@ -16,11 +19,19 @@ export default class CanvasOut {
 
   play () {
     this._setup();
-    this.streamInputToOutput(0);
+    this.state.streaming = true;
+    this.streamInputToOutput();
+  }
+
+  pause () {
+    if (!this.state.streaming) { return };
+    this.state.streaming = false;
+    this._cleanupCv();
+    cacheController.clear();
   }
 
   streamInputToOutput () {
-    if (this.ticking) {
+    if (this.ticking || !this.state.streaming) {
       return;
     }
     this.ticking = true;
@@ -38,6 +49,10 @@ export default class CanvasOut {
     });
   }
 
+  setTransforms (transforms) {
+    this.transforms = this._getTransforms(transforms)
+  }
+
   _setup () {
     this.state.width  = this.input.getWidth();
     this.state.height = this.input.getHeight();
@@ -53,6 +68,12 @@ export default class CanvasOut {
     this.dst      = this._getBaseMat();
 
     this.context = this.data.getContext('2d');
+  }
+
+  _cleanupCv () {
+    this.src.delete();
+    this.srcProxy.delete();
+    this.dst.delete();
   }
 
   _getData () {
@@ -85,6 +106,42 @@ export default class CanvasOut {
       this._matchMatType(this.srcProxy, this.dst); // convert dst type to match src
       this.srcProxy.data.set(this.dst.data); // set srcProxy to dst, so tranforms can chain their outputs together
     });
+  }
+
+  getCacheKey (base, seed) {
+    const unhashedData = [seed].concat(this._flattenToArray(base));
+
+    const hashSum = unhashedData.reduce((prev, cur) => {
+      return prev + this.bitwiseHash(cur);
+    }, 0);
+
+    return (hashSum & hashSum).toString(); // Convert to 32bit integer to normalize length
+  }
+
+  _flattenToArray (obj) {
+    const flattened = [];
+
+    Object.keys(obj).forEach((key) => {
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        Object.assign(flattened, this._flattenToArray(obj[key]));
+      } else {
+        flattened.push(`${key}:${obj[key]}`);
+      }
+    });
+
+    return flattened;
+  }
+
+  // based on https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+  bitwiseHash (unhashed) {
+    let hash = 0;
+
+    for (let i = 0, len = unhashed.length; i < len; ++i) {
+      const char = unhashed.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char; // effectively, hash * 31 - hash + char
+    }
+
+    return hash;
   }
 
   _matchMatType (src, dst) {

@@ -1,3 +1,5 @@
+import cacheController from '../CacheController';
+
 // https://docs.opencv.org/3.4.1/d7/dd0/tutorial_js_thresholding.html
 
 function threshold (src, dst, threshType, conf) { // a lot of unclear details on this stuff
@@ -20,45 +22,48 @@ function adaptive (src, dst, adaptiveMethod, conf) {
 
 export default {
   inRange (conf) {
-    return (src, dst) => {
-      this.inRange.lo = this.inRange.lo || new cv.Mat(src.rows, src.cols, src.type(), [conf.lo,conf.lo,conf.lo,255]);
-      this.inRange.hi = this.inRange.hi || new cv.Mat(src.rows, src.cols, src.type(), [conf.hi,conf.hi,conf.hi,255]);
+    const cacheId = cacheController.getCacheId(conf, 'inRange');
 
-      cv.inRange(src, this.inRange.lo, this.inRange.hi, dst);
+    return function (src, dst) {
+      const cache = cacheController.getCache(cacheId);
+      cache.use('lo', () => new cv.Mat(src.rows, src.cols, src.type(), [conf.lo,conf.lo,conf.lo,255]));
+      cache.use('hi', () => new cv.Mat(src.rows, src.cols, src.type(), [conf.hi,conf.hi,conf.hi,255]));
+
+      cv.inRange(src, cache.lo, cache.hi, dst);
     }
   },
   binary (conf) {
-    return (src, dst) => {
+    return function (src, dst) {
       threshold.call(this, src, dst, cv.THRESH_BINARY, conf);
     }
   },
   binaryInv (conf) {
-    return (src, dst) => {
+    return function (src, dst) {
       threshold.call(this, src, dst, cv.THRESH_BINARY_INV, conf);
     }
   },
   trunc (conf) {
-    return (src, dst) => {
+    return function (src, dst) {
       threshold.call(this, src, dst, cv.THRESH_TRUNC, conf);
     }
   },
   toZero (conf) {
-    return (src, dst) => {
+    return function (src, dst) {
       threshold.call(this, src, dst, cv.THRESH_TOZERO, conf);
     }
   },
   toZeroInv (conf) {
-    return (src, dst) => {
+    return function (src, dst) {
       threshold.call(this, src, dst, cv.THRESH_TOZERO_INV, conf);
     }
   },
   adaptiveMean (conf) {
-    return (src, dst) => {
+    return function (src, dst) {
       adaptive.call(this, src, dst, cv.ADAPTIVE_THRESH_MEAN_C, conf);
     }
   },
   adaptiveGaussian (conf) {
-    return (src, dst) => {
+    return function (src, dst) {
       adaptive.call(this, src, dst, cv.ADAPTIVE_THRESH_GAUSSIAN_C, conf);
     }
   },

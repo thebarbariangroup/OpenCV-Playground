@@ -1,13 +1,14 @@
 import Webcam     from './Webcam';
 import CanvasOut  from './CanvasOut';
+import OutputController  from './OutputController';
 import transforms from './transforms';
 
 
 const TRANSFORMS = [
   // transforms.alter.grayscale(),
-  transforms.smooth.median({
-    kernel: 5,
-  }),
+  // transforms.smooth.median({
+  //   kernel: 5,
+  // }),
   // transforms.featureDetect.canny({
   //   t1: 50,
   //   t2: 50
@@ -22,10 +23,10 @@ const TRANSFORMS = [
   //   dy: 0,
   //   ksize: 5,
   // }),
-  transforms.threshold.adaptiveGaussian({
-    ksize: 5,
-    c: 0,
-  }),
+  // transforms.threshold.adaptiveGaussian({
+  //   ksize: 5,
+  //   c: 0,
+  // }),
   // transforms.threshold.binary({
   //   t1: 0,
   //   t2: 255,
@@ -51,7 +52,10 @@ document.body.addEventListener('OPENCV_BUILT', () => {
       input: webcam,
       output: output,
       data: data,
-      transforms: TRANSFORMS
+    });
+
+    const outputController = new OutputController({
+      output: canvasOut,
     });
 
     webcam.initializeCamera()
@@ -59,7 +63,8 @@ document.body.addEventListener('OPENCV_BUILT', () => {
       return webcam.beginStream();
     })
     .then(() => {
-      canvasOut.play();
+      outputController.setTransforms(TRANSFORMS); // initial transforms
+      outputController.play();
     });
   }
 });

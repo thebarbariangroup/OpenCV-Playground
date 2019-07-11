@@ -4,10 +4,8 @@ import OutputController  from './OutputController';
 import transforms        from './transforms';
 
 const TRANSFORMS = () => [
-  transforms.smooth.blur({
-    kernel: 3,
-    anchor: -1
-  })
+  transforms.histogram.clahe(),
+  // transforms.histogram.equalize(),
 ];
 
 document.body.addEventListener('OPENCV_BUILT', () => {

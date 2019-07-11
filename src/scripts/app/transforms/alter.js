@@ -28,6 +28,7 @@ export default {
   },
   grayscale () {
     return function (src, dst) {
+      debugger;
       cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
     }
   },

@@ -5,6 +5,7 @@ import featureDetect from './featureDetect';
 import morph from './morph';
 import imageGradient from './imageGradient';
 import alter from './alter';
+import histogram from './histogram';
 
 export default {
   arithmetic,
@@ -14,4 +15,5 @@ export default {
   morph,
   imageGradient,
   alter,
+  histogram
 };

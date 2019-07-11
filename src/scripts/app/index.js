@@ -2,35 +2,30 @@ import Webcam     from './Webcam';
 import CanvasOut  from './CanvasOut';
 import transforms from './transforms';
 
-
 const TRANSFORMS = [
-  // transforms.alter.grayscale(),
-  transforms.smooth.median({
-    kernel: 5,
-  }),
   // transforms.featureDetect.canny({
   //   t1: 50,
   //   t2: 50
-  // }),
-  // transforms.imageGradient.laplacian({
-  //   ksize: 5,
-  //   scale: 1,
-  //   delta: 0,
   // }),
   // transforms.imageGradient.sobel({
   //   dx: 2,
   //   dy: 0,
   //   ksize: 5,
   // }),
-  transforms.threshold.adaptiveGaussian({
-    ksize: 5,
-    c: 0,
-  }),
-  // transforms.threshold.binary({
-  //   t1: 0,
-  //   t2: 255,
-  //   flag: 'otsu',
+  transforms.histogram.equalize(),
+  // transforms.threshold.adaptiveMean({
+  //   ksize: 3,
+  //   c: 0
   // }),
+  transforms.threshold.inRange({
+    lo: 100,
+    hi: 155,
+  }),
+  transforms.imageGradient.laplacian({
+    ksize: 1,
+    scale: 20,
+    delta: -200,
+  }),
   transforms.alter.setChannel({
     idx: 3,
     val: 255,

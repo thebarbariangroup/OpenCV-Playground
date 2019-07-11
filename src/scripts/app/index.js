@@ -1,36 +1,13 @@
-import Webcam     from './Webcam';
-import CanvasOut  from './CanvasOut';
+import Webcam            from './Webcam';
+import CanvasOut         from './CanvasOut';
 import OutputController  from './OutputController';
-import transforms from './transforms';
+import transforms        from './transforms';
 
-const TRANSFORMS = [
-  // transforms.featureDetect.canny({
-  //   t1: 50,
-  //   t2: 50
-  // }),
-  // transforms.imageGradient.sobel({
-  //   dx: 2,
-  //   dy: 0,
-  //   ksize: 5,
-  // }),
-  transforms.histogram.equalize(),
-  // transforms.threshold.adaptiveMean({
-  //   ksize: 3,
-  //   c: 0
-  // }),
-  transforms.threshold.inRange({
-    lo: 100,
-    hi: 155,
-  }),
-  transforms.imageGradient.laplacian({
-    ksize: 1,
-    scale: 20,
-    delta: -200,
-  }),
-  transforms.alter.setChannel({
-    idx: 3,
-    val: 255,
-  }),
+const TRANSFORMS = () => [
+  transforms.smooth.blur({
+    kernel: 3,
+    anchor: -1
+  })
 ];
 
 document.body.addEventListener('OPENCV_BUILT', () => {

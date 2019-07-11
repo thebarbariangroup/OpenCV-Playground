@@ -5,7 +5,9 @@ class CacheController {
     this.cvObjects = [];
   }
 
-  getCache (id) {
+  getCache (base, seed) {
+    const id = this._getCacheId(base, seed);
+    
     if (this.caches[id]) {
       return this.caches[id];
     } else {
@@ -13,7 +15,7 @@ class CacheController {
     }
   }
 
-  getCacheId (base, seed) {
+  _getCacheId (base, seed) {
     const unhashedData = [seed].concat(this._flattenToArray(base));
 
     const hashSum = unhashedData.reduce((prev, cur) => {
@@ -30,31 +32,12 @@ class CacheController {
   }
 
   _createCache (id) {
-    // const group = this._getGroupProxy();
     const group = this._getCacheObject();
 
     this.caches[id] = group;
 
     return group;
   }
-
-  // _getGroupProxy () {
-  //   return new Proxy({}, {
-  //     set (target, name, definition, reciever) {
-  //       if (Reflect.has(target, name, reciever)) { // if property is already set
-  //         return true;
-  //       } else {
-  //         const value = definition();
-
-  //         if (value && typeof value.delete === 'function') {
-  //           this.cvObjects.push(value); // save for deletion
-  //         }
-
-  //         return Reflect.set(target, name, value, reciever);
-  //       }
-  //     }
-  //   });
-  // }
 
   _getCacheObject () {
     return {
@@ -68,6 +51,7 @@ class CacheController {
           return item;
         }
 
+        // TODO: explain this
         if (item && typeof item.delete === 'function') {
           instance.cvObjects.push(item); // save for deletion
         }

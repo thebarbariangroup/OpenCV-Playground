@@ -4,14 +4,9 @@ import cacheController from '../CacheController';
 export default {
   // sets the channel at conf.idx to conf.val
   setChannel (conf) {
-    const CacheId = cacheController.getCacheId(conf, 'setChannel');
+    const cache = cacheController.getCache(conf, 'setChannel');
 
     return function (src, dst) {
-      const cache = cacheController.getCache(CacheId);
-      // cache.newPlane = () => {
-      //   const color = new cv.Scalar(conf.val);
-      //   return new cv.Mat(src.rows, src.cols, cv.CV_8U, color);
-      // };
       cache.use('newPlane', () => {
         const color = new cv.Scalar(conf.val);
         return new cv.Mat(src.rows, src.cols, cv.CV_8U, color);

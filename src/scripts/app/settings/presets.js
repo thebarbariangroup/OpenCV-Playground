@@ -5,7 +5,7 @@ const presets = [
 
   {
     name: 'Grayscale',
-    transforms: [
+    transforms: () => [
       transforms.alter.grayscale(),
     ],
     // schema: {
@@ -15,7 +15,7 @@ const presets = [
 
   {
     name: 'adaptiveGaussian (smoothed)',
-    transforms: [
+    transforms: () => [
       transforms.smooth.median({
         kernel: 5,
       }),
@@ -32,7 +32,7 @@ const presets = [
 
   {
     name: 'Canny',
-    transforms: [
+    transforms: () => [
       transforms.featureDetect.canny({
         t1: 50,
         t2: 50,
@@ -42,7 +42,7 @@ const presets = [
 
   {
     name: 'Binary Inverse',
-    transforms: [
+    transforms: () => [
       transforms.threshold.binaryInv({
         t1: 100,
         t2: 0,

@@ -89,8 +89,8 @@ export default class CanvasOut {
     return new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
   }
 
-  _getTransforms (transforms = []) {
-    transforms = transforms.map((transform) => {
+  _getTransforms (factoryTransforms = () => []) {
+    let transforms = factoryTransforms().map((transform) => {
       return transform.bind(this);
     });
     transforms.unshift(this._copySrcToDst); // perpend a setup transform to the queue
@@ -106,42 +106,6 @@ export default class CanvasOut {
       this._matchMatType(this.srcProxy, this.dst); // convert dst type to match src
       this.srcProxy.data.set(this.dst.data); // set srcProxy to dst, so tranforms can chain their outputs together
     });
-  }
-
-  getCacheKey (base, seed) {
-    const unhashedData = [seed].concat(this._flattenToArray(base));
-
-    const hashSum = unhashedData.reduce((prev, cur) => {
-      return prev + this.bitwiseHash(cur);
-    }, 0);
-
-    return (hashSum & hashSum).toString(); // Convert to 32bit integer to normalize length
-  }
-
-  _flattenToArray (obj) {
-    const flattened = [];
-
-    Object.keys(obj).forEach((key) => {
-      if (typeof obj[key] === 'object' && obj[key] !== null) {
-        Object.assign(flattened, this._flattenToArray(obj[key]));
-      } else {
-        flattened.push(`${key}:${obj[key]}`);
-      }
-    });
-
-    return flattened;
-  }
-
-  // based on https://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
-  bitwiseHash (unhashed) {
-    let hash = 0;
-
-    for (let i = 0, len = unhashed.length; i < len; ++i) {
-      const char = unhashed.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char; // effectively, hash * 31 - hash + char
-    }
-
-    return hash;
   }
 
   _matchMatType (src, dst) {

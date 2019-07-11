@@ -4,10 +4,9 @@ import cacheController from '../CacheController';
 
 export default {
   blur (conf) {
-    const cacheId = cacheController.getCacheId(conf, 'blur');
+    const cache = cacheController.getCache(conf, 'blur');
 
     return function (src, dst) {
-      const cache = cacheController.getCache(cacheId);
       cache.use('ksize', () => new cv.Size(conf.kernel, conf.kernel));
       cache.use('anchor', () => new cv.Point(conf.anchor, conf.anchor));
 
@@ -15,10 +14,9 @@ export default {
     }
   },
   gaussian (conf) {
-    const cacheId = cacheController.getCacheId(conf, 'gaussian');
+    const cache = cacheController.getCache(conf, 'gaussian');
 
     return function (src, dst) {
-      const cache = cacheController.getCache(cacheId);
       cache.use('ksize', () => new cv.Size(conf.kernel, conf.kernel)); // must be an odd number
 
       cv.GaussianBlur(src, dst, cache.ksize, 10, 10, cv.BORDER_DEFAULT);
@@ -30,10 +28,9 @@ export default {
     }
   },
   bilateral (conf) {
-    const cacheId = cacheController.getCacheId(conf, 'bilateral');
+    const cache = cacheController.getCache(conf, 'bilateral');
 
     return function (src, dst) {
-      const cache = cacheController.getCache(cacheId);
       cache.use('bilateralSrc', () => new cv.Mat(src.rows, src.cols, cv.CV_8UC3));
   
       cv.cvtColor(src, cache.bilateralSrc, cv.COLOR_RGBA2RGB);

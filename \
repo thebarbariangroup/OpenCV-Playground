@@ -1,0 +1,32 @@
+Merge branch 'master' of https://github.com/thebarbariangroup/OpenCV-Playground
+
+# Conflicts:
+#	src/scripts/app/index.js
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   src/index.html
+#	new file:   src/scripts/app/CacheController.js
+#	modified:   src/scripts/app/CanvasOut.js
+#	new file:   src/scripts/app/OutputController.js
+#	modified:   src/scripts/app/index.js
+#	new file:   src/scripts/app/settings/presets.js
+#	modified:   src/scripts/app/transforms/alter.js
+#	modified:   src/scripts/app/transforms/featureDetect.js
+#	modified:   src/scripts/app/transforms/imageGradient.js
+#	modified:   src/scripts/app/transforms/morph.js
+#	modified:   src/scripts/app/transforms/smooth.js
+#	modified:   src/scripts/app/transforms/threshold.js
+#	modified:   src/styles/index.scss
+#

@@ -4,8 +4,10 @@ import OutputController  from './OutputController';
 import transforms        from './transforms';
 
 const TRANSFORMS = () => [
-  transforms.histogram.clahe(),
-  // transforms.histogram.equalize(),
+  transforms.featureDetect.canny({
+    t1: 50,
+    t2: 50,
+  }),
 ];
 
 document.body.addEventListener('OPENCV_BUILT', () => {

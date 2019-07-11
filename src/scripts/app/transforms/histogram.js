@@ -8,7 +8,6 @@ export default {
   },
   clahe (conf) {
     return (src, dst) => {
-      debugger;
       this.ksize = this.ksize || new cv.Size(8, 8);
 
       cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);

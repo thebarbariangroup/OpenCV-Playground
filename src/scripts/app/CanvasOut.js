@@ -31,7 +31,6 @@ export default class CanvasOut {
   }
 
   streamInputToOutput () {
-    debugger;
     if (this.ticking || !this.state.streaming) {
       return;
     }

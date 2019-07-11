@@ -22,10 +22,9 @@ function adaptive (src, dst, adaptiveMethod, conf) {
 
 export default {
   inRange (conf) {
-    const cacheId = cacheController.getCacheId(conf, 'inRange');
+    const cache = cacheController.getCache(conf, 'inRange');
 
     return function (src, dst) {
-      const cache = cacheController.getCache(cacheId);
       cache.use('lo', () => new cv.Mat(src.rows, src.cols, src.type(), [conf.lo,conf.lo,conf.lo,255]));
       cache.use('hi', () => new cv.Mat(src.rows, src.cols, src.type(), [conf.hi,conf.hi,conf.hi,255]));
 

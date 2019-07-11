@@ -52,6 +52,58 @@ const presets = [
         val: 255,
       }),
     ]
+  },
+
+  {
+    name: 'Line Flow',
+    transforms: () => [
+      transforms.smooth.median({
+        kernel: 101,
+        anchor: -1,
+      }),
+      transforms.featureDetect.canny({
+        t1: 10,
+        t2: 10,
+      }),
+    ]
+  },
+
+  {
+    name: 'Better Line Flow',
+    transforms: () => [
+      transforms.histogram.equalize(),
+      transforms.smooth.median({
+        kernel: 47,
+        anchor: -1,
+      }),
+      transforms.featureDetect.canny({
+        t1: 10,
+        t2: 10,
+      }),
+    ]
+  },
+
+  {
+    name: 'thing',
+    transforms: () => [
+      transforms.threshold.inRange({
+        lo: 100,
+        hi: 255,
+      }),
+      transforms.featureDetect.canny({
+        t1: 220,
+        t2: 220,
+      }),
+      transforms.morph.gradient({
+        kernel: 3,
+        anchor: -1,
+        iterations: 1,
+      }),
+      transforms.featureDetect.canny({
+        t1: 2,
+        t2: 2,
+      }),
+    ]
   }
 
 ];

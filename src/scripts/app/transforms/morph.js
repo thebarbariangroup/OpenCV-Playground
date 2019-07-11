@@ -3,8 +3,7 @@ import cacheController from '../CacheController';
 // https://docs.opencv.org/3.1.0/d9/d61/tutorial_py_morphological_ops.html
 
 function morph (src, dst, morphType, conf) {
-  const cacheId = cacheController.getCacheId(conf, morphType);
-  const cache = cacheController.getCach(cacheId);
+  const cache = cacheController.getCache(conf, morphType);
 
   cache.use('ksize', () => new cv.Size(conf.kernel, conf.kernel));
   cache.use('kernel',() => cv.getStructuringElement(cv.MORPH_RECT, cache.ksize));

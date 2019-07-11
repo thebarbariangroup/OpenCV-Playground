@@ -4,6 +4,7 @@ import OutputController  from './OutputController';
 import transforms        from './transforms';
 
 const TRANSFORMS = () => [
+  transforms.histogram.clahe(),
   transforms.featureDetect.canny({
     t1: 50,
     t2: 50,

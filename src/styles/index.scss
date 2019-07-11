@@ -2,7 +2,7 @@
 
 body {
   font-family: 'Helvetica-neue', 'Arial', sans-serif;
-  background-color: pink;
+  background-color: black;
   color: #FF0;
 }
 
@@ -16,16 +16,48 @@ body {
   position: relative;
   max-width: 50%;
   overflow: hidden; 
-
+  
   &_title {
     position: absolute;
     top: 1rem;
     left: 1rem;
     z-index: 1;
   }
-
+  
   canvas, video {
     width: 100%;
     transform: scale(-1) rotateX(180deg);
+    background-color: pink;
+  }
+}
+
+.controls {
+  &_container {
+    padding: 1rem;
+  }
+
+  &-group {
+    width: 40rem;
+    max-width: 90%;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 2px;
+
+    &_title {
+      padding: .5rem .75rem;
+      margin-bottom: .5rem;
+    }
+  }
+
+  &-button {
+    display: inline-block;
+    margin: .25rem;
+    padding: .5rem .75rem;
+    background-color: #222;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
   }
 }

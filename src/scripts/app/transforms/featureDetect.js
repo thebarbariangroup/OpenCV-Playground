@@ -1,7 +1,7 @@
 export default {
   canny (conf) {
     // https://docs.opencv.org/3.1.0/dd/d1a/group__imgproc__feature.html#ga04723e007ed888ddf11d9ba04e2232de
-    return (src, dst) => {
+    return function (src, dst) {
       cv.Canny(src, dst, conf.t1, conf.t2, 3, true); // Aperture seems to only work at 3.
     }
   },

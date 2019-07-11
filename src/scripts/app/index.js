@@ -1,5 +1,6 @@
 import Webcam     from './Webcam';
 import CanvasOut  from './CanvasOut';
+import OutputController  from './OutputController';
 import transforms from './transforms';
 
 const TRANSFORMS = [
@@ -46,7 +47,10 @@ document.body.addEventListener('OPENCV_BUILT', () => {
       input: webcam,
       output: output,
       data: data,
-      transforms: TRANSFORMS
+    });
+
+    const outputController = new OutputController({
+      output: canvasOut,
     });
 
     webcam.initializeCamera()
@@ -54,7 +58,8 @@ document.body.addEventListener('OPENCV_BUILT', () => {
       return webcam.beginStream();
     })
     .then(() => {
-      canvasOut.play();
+      outputController.setTransforms(TRANSFORMS); // initial transforms
+      outputController.play();
     });
   }
 });

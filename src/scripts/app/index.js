@@ -4,8 +4,16 @@ import OutputController  from './OutputController';
 import transforms        from './transforms';
 
 const TRANSFORMS = () => [
-  transforms.histogram.clahe(),
-  // transforms.histogram.equalize(),
+  // transforms.histogram.clahe(),
+  transforms.histogram.equalize(),
+  transforms.smooth.median({
+    kernel: 47,
+    anchor: -1,
+  }),
+  transforms.featureDetect.canny({
+    t1: 10,
+    t2: 10,
+  }),
 ];
 
 document.body.addEventListener('OPENCV_BUILT', () => {

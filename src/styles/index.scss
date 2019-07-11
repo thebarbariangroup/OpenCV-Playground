@@ -12,12 +12,26 @@ body {
 }
 
 .image-group {
-  flex: 0 0 50%;
-  position: relative;
-  max-width: 50%;
-  overflow: hidden; 
+  // flex: 0 0 50%;
+  // position: relative;
+  // max-width: 50%;
+  overflow: hidden;
+
+  &--input {
+    display: none;
+  }
+
+  &--output {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vh;
+    max-width: none;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
   
   &_title {
+    display: none;
     position: absolute;
     top: 1rem;
     left: 1rem;
@@ -27,12 +41,13 @@ body {
   canvas, video {
     width: 100%;
     transform: scale(-1) rotateX(180deg);
-    background-color: pink;
+    // background-color: pink;
   }
 }
 
 .controls {
   &_container {
+    display: none;
     padding: 1rem;
   }
 

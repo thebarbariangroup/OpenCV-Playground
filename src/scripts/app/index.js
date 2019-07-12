@@ -4,15 +4,10 @@ import OutputController  from './OutputController';
 import transforms        from './transforms';
 
 const TRANSFORMS = () => [
-  // transforms.histogram.clahe(),
-  transforms.histogram.equalize(),
-  transforms.smooth.median({
-    kernel: 47,
-    anchor: -1,
-  }),
+  transforms.histogram.clahe(),
   transforms.featureDetect.canny({
-    t1: 10,
-    t2: 10,
+    t1: 50,
+    t2: 50,
   }),
 ];
 

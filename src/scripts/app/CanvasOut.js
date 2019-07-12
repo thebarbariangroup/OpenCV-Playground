@@ -18,6 +18,8 @@ export default class CanvasOut {
   }
 
   play () {
+    if (this.state.streaming) { return };
+
     this._setup();
     this.state.streaming = true;
     this.streamInputToOutput();
@@ -25,6 +27,7 @@ export default class CanvasOut {
 
   pause () {
     if (!this.state.streaming) { return };
+
     this.state.streaming = false;
     this._cleanupCv();
     cacheController.clear();

@@ -31,22 +31,28 @@ export default class CanvasOut {
   }
 
   streamInputToOutput () {
-    if (this.ticking || !this.state.streaming) {
-      return;
+    try { // This nonsense is a stopgap to keep the demo station running for long periods
+        
+      if (this.ticking || !this.state.streaming) {
+        return;
+      }
+      this.ticking = true;
+
+      this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
+      this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
+      
+      this._applyTransforms();
+
+      cv.imshow(this.output, this.dst);
+
+      requestAnimationFrame(() => {
+        this.ticking = false;
+        this.streamInputToOutput();
+      });
+
+    } catch {
+      location.reload(true);
     }
-    this.ticking = true;
-
-    this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
-    this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
-    
-    this._applyTransforms();
-
-    cv.imshow(this.output, this.dst);
-
-    requestAnimationFrame(() => {
-      this.ticking = false;
-      this.streamInputToOutput();
-    });
   }
 
   setTransforms (transforms) {

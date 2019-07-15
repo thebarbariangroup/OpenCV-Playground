@@ -5,7 +5,15 @@ import transforms        from './transforms';
 
 const TRANSFORMS = () => [
   // transforms.histogram.clahe(),
-  transforms.histogram.equalize(),
+  transforms.arithmetic.absoluteDifference(),
+  transforms.alter.setChannel({
+    idx: 3,
+    val: 255
+  }),
+  transforms.threshold.inRange({
+    lo: 30,
+    hi: 255
+  }),
   // transforms.smooth.median({
   //   kernel: 47,
   //   anchor: -1,

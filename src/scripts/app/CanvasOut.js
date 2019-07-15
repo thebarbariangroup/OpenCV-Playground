@@ -67,7 +67,6 @@ export default class CanvasOut {
     this.data.height = this.state.height;
 
     this.src      = this._getBaseMat();
-    this.srcProxy = this._getBaseMat();
     this.dst      = this._getBaseMat();
 
     this.context = this.data.getContext('2d');
@@ -75,7 +74,6 @@ export default class CanvasOut {
 
   _cleanupCv () {
     this.src.delete();
-    this.srcProxy.delete();
     this.dst.delete();
   }
 
@@ -102,12 +100,10 @@ export default class CanvasOut {
   }
 
   _applyTransforms () {
-    this.srcProxy.data.set(this.src.data); // set initial value for srcProxy.
-
     this.transforms.forEach((transform) => {
-      transform(this.srcProxy, this.dst); // apply transform
-      this._matchMatType(this.srcProxy, this.dst); // convert dst type to match src
-      this.srcProxy.data.set(this.dst.data); // set srcProxy to dst, so tranforms can chain their outputs together
+      transform(this.src, this.dst); // apply transform
+      this._matchMatType(this.src, this.dst); // convert dst type to match src
+      this.src.data.set(this.dst.data); // set src to dst, so tranforms can chain their outputs together
     });
   }
 

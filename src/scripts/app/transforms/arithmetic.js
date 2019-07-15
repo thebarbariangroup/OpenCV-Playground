@@ -26,5 +26,23 @@ export default {
     // }
 
     // rectangle()
+  },
+  absoluteDifference (conf) {
+    return function (src, dst) {
+      this.prevSrc = this.prevSrc || this._getBaseMat();
+      cv.absdiff(src, this.prevSrc, dst);
+
+      // console.log(this.prevSrc.data[0], src.data[0]);
+
+      // for (let i = 0; i < src.data.length; i++) {
+      //   if (src.data[i] !== this.prevSrc.data[i]) {
+      //     debugger;
+      //   }
+      // }
+
+      // dst.data.set(this.prevSrc.data);
+
+      this.prevSrc.data.set(this.src.data);
+    }
   }
 }

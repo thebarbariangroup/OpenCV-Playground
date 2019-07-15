@@ -14,6 +14,18 @@ const presets = [
   },
 
   {
+    name: 'Embossed',
+    transforms: () => [
+      transforms.histogram.clahe(),
+      transforms.arithmetic.absoluteDifference(),
+      transforms.alter.setChannel({
+        idx: 3,
+        val: 255
+      }),
+    ],
+  },
+
+  {
     name: 'adaptiveGaussian (smoothed)',
     transforms: () => [
       transforms.smooth.median({

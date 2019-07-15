@@ -1,7 +1,7 @@
 import transforms from '../transforms';
 
 
-const presets = [
+const compositions = [
 
   {
     name: 'Grayscale',
@@ -43,7 +43,7 @@ const presets = [
   {
     name: 'Binary Inverse',
     transforms: () => [
-      transforms.threshold.binaryInv({
+      transforms.threshold.binary({
         t1: 100,
         t2: 0,
       }),
@@ -108,4 +108,4 @@ const presets = [
 
 ];
 
-export default presets;
+export default compositions;

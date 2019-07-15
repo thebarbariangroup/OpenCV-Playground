@@ -3,17 +3,17 @@ import CanvasOut         from './CanvasOut';
 import OutputController  from './OutputController';
 import transforms        from './transforms';
 
-const TRANSFORMS = () => [
+const COMPOSITION = () => [
   // transforms.histogram.clahe(),
   transforms.histogram.equalize(),
   // transforms.smooth.median({
   //   kernel: 47,
   //   anchor: -1,
   // }),
-  // transforms.featureDetect.canny({
-  //   t1: 10,
-  //   t2: 10,
-  // }),
+  transforms.featureDetect.canny({
+    t1: 10,
+    t2: 10,
+  }),
 ];
 
 document.body.addEventListener('OPENCV_BUILT', () => {
@@ -25,7 +25,7 @@ document.body.addEventListener('OPENCV_BUILT', () => {
     const webcam = new Webcam({
       // output: video
     });
-    
+
     const canvasOut = new CanvasOut({
       input: webcam,
       output: output,
@@ -41,9 +41,8 @@ document.body.addEventListener('OPENCV_BUILT', () => {
       return webcam.beginStream();
     })
     .then(() => {
-      outputController.setTransforms(TRANSFORMS); // initial transforms
+      outputController.setTransforms(COMPOSITION); // initial transforms
       outputController.play();
     });
   }
 });
-

@@ -1,13 +1,16 @@
-import transforms from './transforms';
-import presets    from './settings/presets';
+import transforms   from './transforms';
+import schemas      from './settings/schemas';
+import compositions from './settings/compositions';
+
+import Composer from './Composer';
 
 export default class OutputController {
 
   constructor (conf) {
     this.output = conf.output;
-    this.presetsContainerEl = document.querySelector('.ControlsPresetsContainer');
     this.playEl = document.querySelector('.ControlsPlay');
     this.pauseEl = document.querySelector('.ControlsPause');
+    this.compositionsContainerEl = document.querySelector('.ControlsCompositionsContainer');
 
     this._init();
   }
@@ -18,9 +21,9 @@ export default class OutputController {
   }
 
   _setupEventHandlers () {
-    this._onPresetClick = this._onPresetClick.bind(this);
-    this.presetEls.forEach((el) => {
-      el.addEventListener('click', this._onPresetClick);
+    this._onCompositionClick = this._onCompositionClick.bind(this);
+    this.compositionEls.forEach((el) => {
+      el.addEventListener('click', this._onCompositionClick);
     });
 
     this.playEl.addEventListener('click', this.play.bind(this));
@@ -39,9 +42,9 @@ export default class OutputController {
     this.output.setTransforms(tfs);
   }
 
-  _onPresetClick (e) {
-    const presetId = e.target.dataset.presetId;
-    const tfs = presets[presetId].transforms;
+  _onCompositionClick (e) {
+    const compositionId = e.target.dataset.compositionId;
+    const tfs = compositions[compositionId].transforms;
 
     this.output.pause();
     this.output.setTransforms(tfs);
@@ -49,21 +52,14 @@ export default class OutputController {
   }
 
   _setupControls () {
-    const html = presets.reduce((acc, cur, idx) => {
-      return acc + this._presetHtml(idx, cur.name);
+    this.compositionsContainerEl.innerHTML = compositions.reduce((acc, cur, idx) => {
+      return acc + this._compositionHtml(idx, cur.name);
     }, '');
-
-    this.presetsContainerEl.innerHTML = html;
-
-    this.presetEls = document.querySelectorAll('.ControlsPreset');
+    this.compositionEls = document.querySelectorAll('.ControlsComposition');
   }
 
-  _presetHtml (idx, name) {
-    return `<button class="controls-button ControlsPreset" data-preset-id="${idx}">${name}</button>`;
-  }
-
-  _transformItemHtml (id, name) {
-    return `<li class="builder-item BuilderItem" data-transform-id="${id}">${name}</li>`;
+  _compositionHtml (idx, name) {
+    return `<button class="controls-button ControlsComposition" data-composition-id="${idx}">${name}</button>`;
   }
 
 }

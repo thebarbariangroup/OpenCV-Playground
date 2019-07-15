@@ -29,6 +29,22 @@ body {
     transform: scale(-1) rotateX(180deg);
     background-color: pink;
   }
+
+  &_image--demo-output {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    z-index: 1;
+
+    canvas {
+      height: 100%;
+      background-color: black;
+      object-fit: contain;
+    }
+  }
 }
 
 .controls {

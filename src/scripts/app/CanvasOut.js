@@ -6,7 +6,7 @@ export default class CanvasOut {
     this.output = conf.output;
     this.data   = conf.data || this._getData();
     this.transforms = null; // transforms are set through setTransforms()
-    this.ticking = false;
+    this.timeSinceTransform = 0;
     
     this.context = null;
 
@@ -18,6 +18,8 @@ export default class CanvasOut {
   }
 
   play () {
+    if (this.state.streaming) { return };
+
     this._setup();
     this.state.streaming = true;
     this.streamInputToOutput();
@@ -25,34 +27,32 @@ export default class CanvasOut {
 
   pause () {
     if (!this.state.streaming) { return };
+
     this.state.streaming = false;
     this._cleanupCv();
     cacheController.clear();
   }
 
-  streamInputToOutput () {
-    try { // This nonsense is a stopgap to keep the demo station running for long periods
-        
-      if (this.ticking || !this.state.streaming) {
-        return;
-      }
-      this.ticking = true;
+  streamInputToOutput (time) {
+    if (!this.state.streaming) {
+      return;
+    }
 
+    if (time - this.timeSinceTransform >= 1000/this.state.frameRate) {
       this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
       this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
       
       this._applyTransforms();
 
-      cv.imshow(this.output, this.dst);
-
-      requestAnimationFrame(() => {
-        this.ticking = false;
-        this.streamInputToOutput();
-      });
-
-    } catch {
-      location.reload(true);
+      
+      this.timeSinceTransform = time;
     }
+
+    cv.imshow(this.output, this.dst);
+
+    requestAnimationFrame((t) => {
+      this.streamInputToOutput(t);
+    });
   }
 
   setTransforms (transforms) {
@@ -60,6 +60,7 @@ export default class CanvasOut {
   }
 
   _setup () {
+    this.state.frameRate = this.input.getFrameRate();
     this.state.width  = this.input.getWidth();
     this.state.height = this.input.getHeight();
 
@@ -70,7 +71,6 @@ export default class CanvasOut {
     this.data.height = this.state.height;
 
     this.src      = this._getBaseMat();
-    this.srcProxy = this._getBaseMat();
     this.dst      = this._getBaseMat();
 
     this.context = this.data.getContext('2d');
@@ -78,7 +78,6 @@ export default class CanvasOut {
 
   _cleanupCv () {
     this.src.delete();
-    this.srcProxy.delete();
     this.dst.delete();
   }
 
@@ -105,12 +104,10 @@ export default class CanvasOut {
   }
 
   _applyTransforms () {
-    this.srcProxy.data.set(this.src.data); // set initial value for srcProxy.
-
     this.transforms.forEach((transform) => {
-      transform(this.srcProxy, this.dst); // apply transform
-      this._matchMatType(this.srcProxy, this.dst); // convert dst type to match src
-      this.srcProxy.data.set(this.dst.data); // set srcProxy to dst, so tranforms can chain their outputs together
+      transform(this.src, this.dst); // apply transform
+      this._matchMatType(this.src, this.dst); // convert dst type to match src
+      this.src.data.set(this.dst.data); // set src to dst, so tranforms can chain their outputs together
     });
   }
 

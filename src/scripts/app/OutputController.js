@@ -1,4 +1,5 @@
-import presets from './settings/presets';
+import transforms from './transforms';
+import presets    from './settings/presets';
 
 export default class OutputController {
 
@@ -34,16 +35,16 @@ export default class OutputController {
     this.output.pause();
   }
 
-  setTransforms (transforms) {
-    this.output.setTransforms(transforms);
+  setTransforms (tfs) {
+    this.output.setTransforms(tfs);
   }
 
   _onPresetClick (e) {
     const presetId = e.target.dataset.presetId;
-    const transforms = presets[presetId].transforms;
+    const tfs = presets[presetId].transforms;
 
     this.output.pause();
-    this.output.setTransforms(transforms);
+    this.output.setTransforms(tfs);
     this.output.play();
   }
 
@@ -51,7 +52,7 @@ export default class OutputController {
     const html = presets.reduce((acc, cur, idx) => {
       return acc + this._presetHtml(idx, cur.name);
     }, '');
-    
+
     this.presetsContainerEl.innerHTML = html;
 
     this.presetEls = document.querySelectorAll('.ControlsPreset');
@@ -59,6 +60,10 @@ export default class OutputController {
 
   _presetHtml (idx, name) {
     return `<button class="controls-button ControlsPreset" data-preset-id="${idx}">${name}</button>`;
+  }
+
+  _transformItemHtml (id, name) {
+    return `<li class="builder-item BuilderItem" data-transform-id="${id}">${name}</li>`;
   }
 
 }

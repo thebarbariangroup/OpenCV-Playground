@@ -57,8 +57,6 @@ canvas {
   }
 
   &-group {
-    width: 40rem;
-    max-width: 90%;
     margin: 1rem 0;
     padding: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.7);
@@ -79,5 +77,14 @@ canvas {
     border-radius: 2px;
     color: white;
     cursor: pointer;
+  }
+}
+
+.builder {
+  display: flex;
+
+  .controls-group {
+    flex: 1 1 50%;
+    margin: 0 .5rem;
   }
 }

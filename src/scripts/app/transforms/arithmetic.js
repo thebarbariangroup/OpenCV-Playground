@@ -26,5 +26,19 @@ export default {
     // }
 
     // rectangle()
+  },
+  absoluteDifference (conf) {
+    return function (src, dst) {
+      this.frameCount = this.frameCount || 0;
+      this.prevSrc = this.prevSrc || this._getBaseMat();
+      cv.absdiff(src, this.prevSrc, dst);
+      this.frameCount++;
+
+      if (this.frameCount == 1) {
+        this.prevSrc.data.set(this.src.data);
+        this.frameCount = 0;
+      }
+
+    }
   }
 }

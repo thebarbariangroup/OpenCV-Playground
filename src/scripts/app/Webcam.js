@@ -27,7 +27,10 @@ export default class Webcam {
 
   initializeCamera () {
     return new Promise((resolve, reject) => {
-      return navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      return navigator.mediaDevices.getUserMedia({ 
+        audio: false,
+        video: {width: {min: 1280}, height: {min: 720}}
+      })
       .then((stream) => {
         this.stream = stream;
         resolve();

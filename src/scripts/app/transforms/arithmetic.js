@@ -29,20 +29,16 @@ export default {
   },
   absoluteDifference (conf) {
     return function (src, dst) {
+      this.frameCount = this.frameCount || 0;
       this.prevSrc = this.prevSrc || this._getBaseMat();
       cv.absdiff(src, this.prevSrc, dst);
+      this.frameCount++;
 
-      // console.log(this.prevSrc.data[0], src.data[0]);
+      if (this.frameCount == 2) {
+        this.prevSrc.data.set(this.src.data);
+        this.frameCount = 0;
+      }
 
-      // for (let i = 0; i < src.data.length; i++) {
-      //   if (src.data[i] !== this.prevSrc.data[i]) {
-      //     debugger;
-      //   }
-      // }
-
-      // dst.data.set(this.prevSrc.data);
-
-      this.prevSrc.data.set(this.src.data);
     }
   }
 }

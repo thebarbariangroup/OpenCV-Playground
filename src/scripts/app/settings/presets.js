@@ -14,7 +14,7 @@ const presets = [
   },
 
   {
-    name: 'Embossed',
+    name: 'T-Rex Vision',
     transforms: () => [
       transforms.histogram.clahe(),
       transforms.arithmetic.absoluteDifference(),

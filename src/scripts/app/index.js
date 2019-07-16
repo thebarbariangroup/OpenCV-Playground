@@ -4,7 +4,7 @@ import OutputController  from './OutputController';
 import transforms        from './transforms';
 
 const TRANSFORMS = () => [
-  // transforms.histogram.equalize(),
+  transforms.histogram.clahe(),
   // transforms.smooth.median({
   //   kernel: 3,
   //   anchor: -1
@@ -14,13 +14,9 @@ const TRANSFORMS = () => [
     idx: 3,
     val: 255
   }),
-  transforms.threshold.inRange({
-    lo: 40,
-    hi: 255
-  }),
-  // transforms.smooth.blur({
-  //   kernel: 5,
-  //   anchor: -1
+  // transforms.threshold.inRange({
+  //   lo: 40,
+  //   hi: 255
   // }),
   function (src, dst) {
     this.whitePlane = this.whitePlane || (() => {

@@ -1,5 +1,6 @@
 import transforms from './transforms';
 import schemas    from './settings/schemas';
+import dragula from '../lib/dragula';
 
 export default class Composer {
 
@@ -7,11 +8,13 @@ export default class Composer {
     this.el = document.querySelector('.Composer');
     this.inventoryEl = document.querySelector('.ComposerInventory');
     this.queueEl = document.querySelector('.ComposerQueue');
+    this.queue = [];
 
     this._init();
   }
 
   _init () {
+    this._setupDragula();
     this._renderInventory();
     this._setupEventHandlers();
   }
@@ -23,34 +26,55 @@ export default class Composer {
     this.inventoryItemEls = this.inventoryEl.querySelectorAll('.ComposerItem');
   }
 
-  _setupEventHandlers () {
-    this._onItemDragstart = this._onItemDragstart.bind(this);
-    this.inventoryItemEls.forEach((el) => {
-      el.addEventListener('dragstart', this._onItemDragstart);
+  _setupDragula () {
+    this.drake = dragula([this.inventoryEl, this.queueEl], {
+      copySortSource: true,
+      removeOnSpill: true,
+      copy: (el, source) => {
+        return source === this.inventoryEl;
+      },
+      accepts: (el, target, source, sibling) => {
+        const queueToQueue = source === this.queueEl && target === this.queueEl;
+        const invToQueue = source === this.inventoryEl && target === this.queueEl;
+        return invToQueue || queueToQueue;
+      }
     });
-    // this.inventoryEl.addEventListener('dragover', this._onInventoryDragover.bind(this));
-    this.queueEl.addEventListener('dragover', this._onQueueDragover.bind(this));
-    this.queueEl.addEventListener('drop', this._onQueueDrop.bind(this));
   }
 
-  _onQueueDragover (e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
+  _setupEventHandlers () {
+    this._onDrop = this._onDrop.bind(this);
+    this.drake.on('drop', this._onDrop);
+
+    this._onRemove = this._onRemove.bind(this);
+    this.drake.on('remove', this._onRemove);
   }
 
-  _onQueueDrop (e) {
-    e.preventDefault();
-    debugger;
+  _onDrop (el, target, source, sibling) {
+    const siblingIdx = this.queue.findIndex((item) => item === sibling);
+    if (source === this.queueEl) {
+      const selfIdx = this.queue.findIndex((item) => item === el);
+      this.queue.splice(selfIdx, 1);
+    }
+
+    this.queue.splice(siblingIdx || 0, 0, el);
+
+    this._updateComposition();
   }
 
-  _onItemDragstart (e) {
-    e.dataTransfer.setData('text/plain', e.target.innerText);
-    e.dataTransfer.setData('text/html', e.target.outerHTML);
+  _onRemove (el, container, source) {
+    const selfIdx = this.queue.findIndex((item) => item === el);
+    this.queue.splice(selfIdx, 1);
+
+    this._updateComposition();
+  }
+
+  _updateComposition () {
+    console.log(this.queue);
   }
 
   _inventoryItemHtml (schema) {
     return `
-      <li class="composer_item controls-button ComposerItem"
+      <li class="composer-item controls-button ComposerItem"
         data-transform-type="${schema.type}"
         data-transform-name="${schema.name}"
         draggable="true"
@@ -59,7 +83,5 @@ export default class Composer {
       </li>
     `;
   }
-
-
 
 }

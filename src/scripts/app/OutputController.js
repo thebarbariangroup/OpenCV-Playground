@@ -16,6 +16,8 @@ export default class OutputController {
   }
 
   _init () {
+    this.composer = new Composer();
+
     this._setupControls();
     this._setupEventHandlers();
   }

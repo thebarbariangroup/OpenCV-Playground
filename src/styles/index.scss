@@ -1,4 +1,5 @@
 @import 'base/normalize';
+@import 'lib/dragula.css';
 
 body {
   font-family: 'Helvetica-neue', 'Arial', sans-serif;
@@ -66,5 +67,16 @@ body {
   .controls-group {
     flex: 1 1 50%;
     margin: 0 .5rem;
+  }
+
+  &_queue,
+  &_inventory {
+    min-height: 10rem;
+  }
+
+  &_queue {
+    .composer-item {
+      display: list-item;
+    }
   }
 }

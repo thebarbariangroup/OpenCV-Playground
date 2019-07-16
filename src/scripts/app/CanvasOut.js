@@ -6,7 +6,7 @@ export default class CanvasOut {
     this.output = conf.output;
     this.data   = conf.data || this._getData();
     this.transforms = null; // transforms are set through setTransforms()
-    this.ticking = false;
+    this.timeSinceTransform = 0;
     
     this.context = null;
 
@@ -33,23 +33,27 @@ export default class CanvasOut {
     cacheController.clear();
   }
 
-  streamInputToOutput () {
-    if (this.ticking || !this.state.streaming) {
+  streamInputToOutput (time) {
+    if (!this.state.streaming) {
       return;
     }
-    this.ticking = true;
 
-    this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
-    this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
-    
-    this._applyTransforms();
+    if (time - this.timeSinceTransform >= 1000/this.state.frameRate) {
+      this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
+      this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
+      
+      this._applyTransforms();
+
+      
+      this.timeSinceTransform = time;
+    }
 
     cv.imshow(this.output, this.dst);
 
-    requestAnimationFrame(() => {
-      this.ticking = false;
-      this.streamInputToOutput();
+    requestAnimationFrame((t) => {
+      this.streamInputToOutput(t);
     });
+
   }
 
   setTransforms (transforms) {
@@ -57,6 +61,7 @@ export default class CanvasOut {
   }
 
   _setup () {
+    this.state.frameRate = this.input.getFrameRate();
     this.state.width  = this.input.getWidth();
     this.state.height = this.input.getHeight();
 

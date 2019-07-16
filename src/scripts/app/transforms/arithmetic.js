@@ -34,7 +34,7 @@ export default {
       cv.absdiff(src, this.prevSrc, dst);
       this.frameCount++;
 
-      if (this.frameCount == 2) {
+      if (this.frameCount == 1) {
         this.prevSrc.data.set(this.src.data);
         this.frameCount = 0;
       }

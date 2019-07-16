@@ -18,10 +18,10 @@ const TRANSFORMS = () => [
     lo: 40,
     hi: 255
   }),
-  transforms.smooth.blur({
-    kernel: 5,
-    anchor: -1
-  }),
+  // transforms.smooth.blur({
+  //   kernel: 1,
+  //   anchor: -1
+  // }),
   function (src, dst) {
     this.whitePlane = this.whitePlane || (() => {
       const color = new cv.Scalar(255);

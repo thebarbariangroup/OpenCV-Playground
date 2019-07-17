@@ -4,11 +4,13 @@ import dragula from '../lib/dragula';
 
 export default class Composer {
 
-  constructor () {
+  constructor (outputController) {
+    this.outputController = outputController;
     this.el = document.querySelector('.Composer');
     this.inventoryEl = document.querySelector('.ComposerInventory');
     this.queueEl = document.querySelector('.ComposerQueue');
     this.queue = [];
+    this.composition = () => [];
 
     this._init();
   }
@@ -37,7 +39,7 @@ export default class Composer {
         const queueToQueue = source === this.queueEl && target === this.queueEl;
         const invToQueue = source === this.inventoryEl && target === this.queueEl;
         return invToQueue || queueToQueue;
-      }
+      },
     });
   }
 
@@ -69,7 +71,21 @@ export default class Composer {
   }
 
   _updateComposition () {
-    console.log(this.queue);
+    const composedList = this.queue.map((item) => {
+      const type = item.dataset.transformType;
+      const name = item.dataset.transformName;
+      const schema = schemas.find((schema) => schema.type === type && schema.name === name);
+      const transform = transforms[type] && transforms[type][name];
+
+      if (!schema || !transform) {
+        console.log('Transform or schema does not exist: ', type, name);
+      }
+
+      return transform(schema.defaultConf);
+    });
+
+    this.composition = () => composedList;
+    this.outputController.setTransforms(this.composition);
   }
 
   _inventoryItemHtml (schema) {

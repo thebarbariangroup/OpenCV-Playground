@@ -4,11 +4,6 @@ import OutputController  from './OutputController';
 import transforms        from './transforms';
 
 const TRANSFORMS = () => [
-  // transforms.histogram.equalize(),
-  // transforms.smooth.median({
-  //   kernel: 3,
-  //   anchor: -1
-  // }),
   transforms.arithmetic.absoluteDifference(),
   transforms.alter.setChannel({
     idx: 3,
@@ -18,10 +13,6 @@ const TRANSFORMS = () => [
     lo: 40,
     hi: 255
   }),
-  // transforms.smooth.blur({
-  //   kernel: 5,
-  //   anchor: -1
-  // }),
   function (src, dst) {
     this.whitePlane = this.whitePlane || (() => {
       const color = new cv.Scalar(255);

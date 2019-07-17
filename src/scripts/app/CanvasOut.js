@@ -6,7 +6,7 @@ export default class CanvasOut {
     this.output = conf.output;
     this.data   = conf.data || this._getData();
     this.transforms = null; // transforms are set through setTransforms()
-    this.timeSinceTransform = 0;
+    this.ticking = false;
     
     this.context = null;
 
@@ -34,21 +34,22 @@ export default class CanvasOut {
   }
 
   streamInputToOutput (time) {
+    this.timeSinceTransform = this.timeSinceTransform || time;
     if (!this.state.streaming) {
       return;
     }
 
     if (time - this.timeSinceTransform >= 1000/this.state.frameRate) {
+
       this.context.drawImage(this.input.getOutput(), 0, 0, this.state.width, this.state.height);
       this.src.data.set(this.context.getImageData(0, 0, this.state.width, this.state.height).data);
       
       this._applyTransforms();
 
+      cv.imshow(this.output, this.dst);
       
       this.timeSinceTransform = time;
     }
-
-    cv.imshow(this.output, this.dst);
 
     requestAnimationFrame((t) => {
       this.streamInputToOutput(t);

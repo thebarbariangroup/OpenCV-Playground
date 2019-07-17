@@ -25,9 +25,17 @@ export default class Webcam {
     return dim.height;
   }
 
+  getFrameRate () {
+    const dim = this._getDimensions();
+    return dim.frameRate;
+  }
+
   initializeCamera () {
     return new Promise((resolve, reject) => {
-      return navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      return navigator.mediaDevices.getUserMedia({ 
+        audio: false,
+        video: {width: {min: 1280}, height: {min: 720}}
+      })
       .then((stream) => {
         this.stream = stream;
         resolve();
@@ -55,7 +63,8 @@ export default class Webcam {
       
     this.dimensions = {
       width: this.output.videoWidth, 
-      height: this.output.videoHeight
+      height: this.output.videoHeight,
+      frameRate: this.stream && this.stream.getVideoTracks()[0].getSettings().frameRate
     };
 
     return this.dimensions;

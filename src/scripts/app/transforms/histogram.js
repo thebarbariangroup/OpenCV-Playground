@@ -1,3 +1,5 @@
+import cacheController from '../CacheController';
+
 export default {
   equalize (conf) {
     // https://docs.opencv.org/3.1.0/d5/daf/tutorial_py_histogram_equalization.html
@@ -7,11 +9,12 @@ export default {
     }
   },
   clahe (conf) {
+    const cache = cacheController.getCache(conf, 'clahe');
     return (src, dst) => {
-      this.ksize = this.ksize || new cv.Size(8, 8);
+      cache.use('ksize', () => new cv.Size(8, 8));
 
       cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
-      const clahe = new cv.CLAHE(2.0, this.ksize);
+      const clahe = new cv.CLAHE(2.0, cache.ksize);
       clahe.apply(dst, dst);
     }
   }

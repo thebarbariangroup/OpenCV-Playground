@@ -15,6 +15,8 @@ export default class CanvasOut {
       width: 0,
       height: 0
     };
+
+    this.getBaseMat = this.getBaseMat.bind(this); // needed since we call getBaseMat from some transforms
   }
 
   play () {
@@ -72,8 +74,8 @@ export default class CanvasOut {
     this.data.width  = this.state.width;
     this.data.height = this.state.height;
 
-    this.src      = this._getBaseMat();
-    this.dst      = this._getBaseMat();
+    this.src = this.getBaseMat();
+    this.dst = this.getBaseMat();
 
     this.context = this.data.getContext('2d');
   }
@@ -92,7 +94,7 @@ export default class CanvasOut {
     return this.data;
   }
 
-  _getBaseMat () {
+  getBaseMat () {
     return new cv.Mat(this.state.height, this.state.width, cv.CV_8UC4);
   }
 

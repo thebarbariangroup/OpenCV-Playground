@@ -7,7 +7,7 @@ export default {
     const cache = cacheController.getCache(conf, 'blur');
 
     return function (src, dst) {
-      cache.use('ksize', () => new cv.Size(conf.kernel, conf.kernel));
+      cache.use('ksize', () => new cv.Size(conf.ksize, conf.ksize));
       cache.use('anchor', () => new cv.Point(conf.anchor, conf.anchor));
 
       cv.boxFilter(src, dst, -1, cache.ksize, cache.anchor, true, cv.BORDER_DEFAULT);
@@ -17,14 +17,14 @@ export default {
     const cache = cacheController.getCache(conf, 'gaussian');
 
     return function (src, dst) {
-      cache.use('ksize', () => new cv.Size(conf.kernel, conf.kernel)); // must be an odd number
+      cache.use('ksize', () => new cv.Size(conf.ksize, conf.ksize)); // must be an odd number
 
       cv.GaussianBlur(src, dst, cache.ksize, 10, 10, cv.BORDER_DEFAULT);
     }
   },
   median (conf) {
     return function (src, dst) {
-      cv.medianBlur(src, dst, conf.kernel); //last argument must be an odd number
+      cv.medianBlur(src, dst, conf.size); //last argument must be an odd number
     }
   },
   bilateral (conf) {

@@ -5,7 +5,7 @@ class CacheController {
     this.cvObjects = [];
   }
 
-  getCache (base, seed) {
+  getCache (base = {}, seed) {
     const id = this._getCacheId(base, seed);
     
     if (this.caches[id]) {

@@ -5,7 +5,7 @@ import cacheController from '../CacheController';
 function morph (src, dst, morphType, conf) {
   const cache = cacheController.getCache(conf, morphType);
 
-  cache.use('ksize', () => new cv.Size(conf.kernel, conf.kernel));
+  cache.use('ksize', () => new cv.Size(conf.ksize, conf.ksize));
   cache.use('kernel', () => cv.getStructuringElement(cv.MORPH_RECT, cache.ksize));
   cache.use('anchor', () => new cv.Point(conf.anchor, conf.anchor));
 

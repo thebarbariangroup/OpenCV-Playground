@@ -29,7 +29,7 @@ const compositions = [
     name: 'adaptiveGaussian (smoothed)',
     transforms: () => [
       transforms.smooth.median({
-        kernel: 5,
+        size: 5,
       }),
       transforms.threshold.adaptiveGaussian({
         ksize: 5,
@@ -70,7 +70,7 @@ const compositions = [
     name: 'Line Flow',
     transforms: () => [
       transforms.smooth.median({
-        kernel: 101,
+        size: 101,
         anchor: -1,
       }),
       transforms.featureDetect.canny({
@@ -85,8 +85,7 @@ const compositions = [
     transforms: () => [
       transforms.histogram.equalize(),
       transforms.smooth.median({
-        kernel: 47,
-        anchor: -1,
+        size: 47,
       }),
       transforms.featureDetect.canny({
         t1: 10,

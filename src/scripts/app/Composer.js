@@ -52,22 +52,17 @@ export default class Composer {
   }
 
   _onDrop (el, target, source, sibling) {
-    const siblingIdx = this.queue.findIndex((item) => item === sibling);
-    if (source === this.queueEl) {
-      const selfIdx = this.queue.findIndex((item) => item === el);
-      this.queue.splice(selfIdx, 1);
-    }
-
-    this.queue.splice(siblingIdx || 0, 0, el);
-
+    this._readQueue();
     this._updateComposition();
   }
 
   _onRemove (el, container, source) {
-    const selfIdx = this.queue.findIndex((item) => item === el);
-    this.queue.splice(selfIdx, 1);
-
+    this._readQueue();
     this._updateComposition();
+  }
+
+  _readQueue () {
+    this.queue = Array.from(this.queueEl.children);
   }
 
   _updateComposition () {

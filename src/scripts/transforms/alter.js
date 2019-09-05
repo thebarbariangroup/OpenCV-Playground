@@ -1,5 +1,5 @@
 // direct changes to the src
-import cacheController from '../CacheController';
+import cacheController from '../render/CacheController';
 
 export default {
   // sets the channel at conf.idx to conf.val

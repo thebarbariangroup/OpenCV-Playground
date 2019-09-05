@@ -1,4 +1,4 @@
-import cacheController from '../CacheController';
+import cacheController from '../render/CacheController';
 
 export default {
   equalize (conf) {

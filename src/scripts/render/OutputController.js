@@ -1,25 +1,25 @@
-import transforms   from './transforms';
-import schemas      from './settings/schemas';
-import compositions from './settings/compositions';
+import transforms   from '../transforms';
+import schemas      from '../settings/schemas';
+import compositions from '../settings/compositions';
 
-import Composer from './Composer';
+// import Composer from './Composer';
 
 export default class OutputController {
 
   constructor (conf) {
     this.output = conf.output;
-    this.playEl = document.querySelector('.ControlsPlay');
-    this.pauseEl = document.querySelector('.ControlsPause');
-    this.compositionsContainerEl = document.querySelector('.ControlsCompositionsContainer');
+    // this.playEl = document.querySelector('.ControlsPlay');
+    // this.pauseEl = document.querySelector('.ControlsPause');
+    // this.compositionsContainerEl = document.querySelector('.ControlsCompositionsContainer');
 
     this._init();
   }
 
   _init () {
-    this.composer = new Composer(this);
+    // this.composer = new Composer(this);
 
-    this._setupControls();
-    this._setupEventHandlers();
+    // this._setupControls();
+    // this._setupEventHandlers();
   }
 
   _setupEventHandlers () {

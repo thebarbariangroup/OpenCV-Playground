@@ -1,7 +1,7 @@
 import Webcam            from './Webcam';
 import CanvasOut         from './CanvasOut';
 import OutputController  from './OutputController';
-import transforms        from './transforms';
+import transforms        from '../transforms';
 
 const COMPOSITION = () => [
   // transforms.arithmetic.absoluteDifference(),

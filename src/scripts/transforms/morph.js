@@ -1,4 +1,4 @@
-import cacheController from '../CacheController';
+import cacheController from '../render/CacheController';
 
 // https://docs.opencv.org/3.1.0/d9/d61/tutorial_py_morphological_ops.html
 

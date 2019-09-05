@@ -1,4 +1,4 @@
-import cacheController from '../CacheController';
+import cacheController from '../render/CacheController';
 
 // https://docs.opencv.org/3.4/dd/d6a/tutorial_js_filtering.html
 

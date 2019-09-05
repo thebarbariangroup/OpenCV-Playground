@@ -2,35 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>OpenCV Test</title>
+  <title>OpenCV Compose</title>
   <link rel="stylesheet" href="/main.css">
 </head>
 <body>
-  <div class="image-groups">
-<!--     <div class="image-group">
-      <div class="image-group_title">
-        Video
-      </div><div class="image-group_image">
-        <video id="videoInput"></video>
-      </div>
-    </div> -->
-    <div class="image-group">
-      <div class="image-group_title">
-        Data
-      </div><div class="image-group_image">
-        <canvas id="data"></canvas>
-      </div>
-    </div>
-    <div class="image-group">
-      <div class="image-group_title">
-        Output
-      </div>
-      <div class="image-group_image">
-        <canvas id="canvasOutput"></canvas>
-      </div>
-    </div>
-  </div>
-
   <div class="controls_container">
     <div class="controls-group">
       <button class="controls-button ControlsPlay">play</button>
@@ -56,8 +31,5 @@
       </div>
     </div>
   </div>
-  
-  <script async src="/opencv.js" onload="document.body.dispatchEvent(new Event('OPENCV_BUILT'));" type="text/javascript"></script>
-  <script src="/main.js"></script>
 </body>
 </html>

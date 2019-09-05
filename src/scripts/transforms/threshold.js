@@ -1,4 +1,4 @@
-import cacheController from '../CacheController';
+import cacheController from '../render/CacheController';
 
 // https://docs.opencv.org/3.4.1/d7/dd0/tutorial_js_thresholding.html
 

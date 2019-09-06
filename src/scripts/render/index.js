@@ -1,3 +1,5 @@
+import '../../styles/index.scss';
+
 import Webcam            from './Webcam';
 import CanvasOut         from './CanvasOut';
 import OutputController  from './OutputController';

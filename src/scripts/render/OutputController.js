@@ -2,34 +2,34 @@ import transforms   from '../transforms';
 import schemas      from '../settings/schemas';
 import compositions from '../settings/compositions';
 
+
 // import Composer from './Composer';
 
 export default class OutputController {
 
   constructor (conf) {
     this.output = conf.output;
-    // this.playEl = document.querySelector('.ControlsPlay');
-    // this.pauseEl = document.querySelector('.ControlsPause');
-    // this.compositionsContainerEl = document.querySelector('.ControlsCompositionsContainer');
 
     this._init();
   }
 
   _init () {
-    // this.composer = new Composer(this);
+    this.connection = new WebSocket('ws://localhost:1337');
 
-    // this._setupControls();
-    // this._setupEventHandlers();
+    this._setupEventHandlers();
   }
 
   _setupEventHandlers () {
-    this._onCompositionClick = this._onCompositionClick.bind(this);
-    this.compositionEls.forEach((el) => {
-      el.addEventListener('click', this._onCompositionClick);
-    });
+    this.connection.onopen = () => {
+      console.log('socket open');
+    };
 
-    this.playEl.addEventListener('click', this.play.bind(this));
-    this.pauseEl.addEventListener('click', this.pause.bind(this));
+    this.connection.onerror = (error) => {
+      console.log('socket error', error);
+    };
+
+    this._onMessage = this._onMessage.bind(this);
+    this.connection.onmessage = this._onMessage;
   }
 
   play () {
@@ -44,24 +44,35 @@ export default class OutputController {
     this.output.setTransforms(tfs);
   }
 
-  _onCompositionClick (e) {
-    const compositionId = e.target.dataset.compositionId;
-    const tfs = compositions[compositionId].transforms;
-
-    this.output.pause();
-    this.output.setTransforms(tfs);
-    this.output.play();
+  buildComposition (compositionData) {
+    return () => compositionData.map((transformData) => {
+      const { category, name, conf } = transformData;
+      return transforms[category][name](conf);
+    });
   }
 
-  _setupControls () {
-    this.compositionsContainerEl.innerHTML = compositions.reduce((acc, cur, idx) => {
-      return acc + this._compositionHtml(idx, cur.name);
-    }, '');
-    this.compositionEls = document.querySelectorAll('.ControlsComposition');
+  _onMessage (message) {
+    const messageData = this._jsonParse(message.data);
+    console.log('socket onMessage', messageData);
+
+    if (messageData.action === 'UPDATE_COMPOSITION') {
+      const composition = this.buildComposition(messageData.payload);
+
+      this.pause();
+      this.setTransforms(composition);
+      this.play();
+    }
   }
 
-  _compositionHtml (idx, name) {
-    return `<button class="controls-button ControlsComposition" data-composition-id="${idx}">${name}</button>`;
+  _jsonParse (string) {
+    var obj;
+    try {
+      obj = JSON.parse(string);
+    } catch (e) {
+      console.log('invalid JSON: ', string);
+      return;
+    }
+    return obj;
   }
 
 }

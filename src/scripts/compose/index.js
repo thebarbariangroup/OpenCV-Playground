@@ -1,39 +1,11 @@
-// import Webcam            from './Webcam';
-// import CanvasOut         from './CanvasOut';
-// import OutputController  from './OutputController';
-// import transforms        from './transforms';
+import '../../styles/index.scss';
 
-// const COMPOSITION = () => [
+import Vue from 'vue';
+import App from './App.vue';
 
-// ];
+Vue.config.productionTip = false
 
-// document.body.addEventListener('OPENCV_BUILT', () => {
-//   cv['onRuntimeInitialized'] = () => {
-//     // const video  = document.getElementById('videoInput');
-//     const output = document.getElementById('canvasOutput');
-//     const data   = document.getElementById('data');
+new Vue({
+  render: h => h(App),
+}).$mount('#app');
 
-//     const webcam = new Webcam({
-//       // output: video
-//     });
-
-//     const canvasOut = new CanvasOut({
-//       input: webcam,
-//       output: output,
-//       data: data,
-//     });
-
-//     const outputController = new OutputController({
-//       output: canvasOut,
-//     });
-
-//     webcam.initializeCamera()
-//     .then(() => {
-//       return webcam.beginStream();
-//     })
-//     .then(() => {
-//       outputController.setTransforms(COMPOSITION); // initial transforms
-//       outputController.play();
-//     });
-//   }
-// });

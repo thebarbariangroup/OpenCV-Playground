@@ -1,5 +1,5 @@
 <template>
-  <li class="transform-item">
+  <li :class="`transform-item ${draggable ? 'DragItem' : ''}`">
     {{ schema.label }}
   </li>
 </template>
@@ -14,6 +14,7 @@ export default {
     // Slider,
   },
   props: {
+    draggable: Boolean,
     schema: Object,
     opts: Object,
     location: String, // 'inventory' or 'queue'
@@ -31,6 +32,7 @@ export default {
 
 <style lang="scss">
 .transform-item {
-
+  cursor: pointer;
+  user-select: none;
 }
 </style>

@@ -28,6 +28,7 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuedraggable": "^2.23.0"
   }
 }

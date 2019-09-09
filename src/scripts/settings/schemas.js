@@ -16,6 +16,7 @@ export default [
         {
           name: 'idx',
           label: 'Channel',
+          defaultValue: 3,
           input: {
             type: 'radio',
             values: [
@@ -24,16 +25,15 @@ export default [
               { k: 'blue', v: 2 },
               { k: 'alpha', v: 3 },
             ],
-            defaultValue: 3,
           },
         },
         {
           name: 'val',
           label: 'Value',
+          defaultValue: 255,
           input: {
             type: 'slider',
             range: [0, 255],
-            defaultValue: 255,
           },
         },
       ],
@@ -49,19 +49,19 @@ export default [
         {
           name: 't1',
           label: 'Threshold 1',
+          defaultValue: 50,
           input: {
             type: 'slider',
             range: [0, 255],
-            defaultValue: 50,
           },
         },
         {
           name: 't2',
           label: 'Threshold 2',
+          defaultValue: 50,
           input: {
             type: 'slider',
             range: [0, 255],
-            defaultValue: 50,
           },
         },
       ]

@@ -46,8 +46,8 @@ export default class OutputController {
 
   buildComposition (compositionData) {
     return () => compositionData.map((transformData) => {
-      const { category, name, conf } = transformData;
-      return transforms[category][name](conf);
+      const { category, name, opts } = transformData;
+      return transforms[category][name](opts);
     });
   }
 

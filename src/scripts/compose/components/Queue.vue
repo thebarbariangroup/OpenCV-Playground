@@ -15,6 +15,7 @@
           :key="i + item.schema.category + item.schema.name"
           :schema="item.schema"
           :opts="item.opts"
+          :idx="i"
           location="queue"
         />
       </draggable>
@@ -69,12 +70,16 @@ export default {
     };
   },
   mounted () {
-    this.init();
+    this.setupEventHandlers();
   },
   methods: {
-    init () {
-      this.updateComposition = this.updateComposition.bind(this);
+    setupEventHandlers () {
       EventBus.$on(events.SOCKET_OPEN, this.updateComposition);
+      EventBus.$on(events.QUEUE_REMOVE_ITEM, this.removeItem);
+    },
+    removeItem (idx) {
+      this.items.splice(idx, 1);
+      this.updateComposition();
     },
     updateComposition () {
       this.buildComposition();
@@ -99,13 +104,15 @@ export default {
 
 <style lang="scss">
 .queue {
+  &_content-container {
+    height: 100%;
+  }
+
   &_items {
     display: block;
-    min-height: 100px;
+    min-height: 100%;
     min-width: 300px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
+    padding: 8px;
     background-color: #222;
   }
 }

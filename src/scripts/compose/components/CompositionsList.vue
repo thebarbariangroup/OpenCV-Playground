@@ -1,7 +1,7 @@
 <template>
   <div class="compositions-list">
     <div class="compositions-list_content-container">
-      <div class="compositions-list_header">Compositions:</div>
+      <!-- <div class="compositions-list_header">Compositions:</div> -->
       <div
         class="compositions-list_items"
       ></div>

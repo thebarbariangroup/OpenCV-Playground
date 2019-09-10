@@ -2,7 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPligin = require('vue-loader/lib/plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 
@@ -23,11 +23,20 @@ module.exports = {
       {
         test: /\.scss$/,
         use:  [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
+          // {
+          //   loader: MiniCssExtractPlugin.loader,
+          // },
+          'vue-style-loader',
           'css-loader',
           'sass-loader',
+          // {
+          //   loader: 'sass-loader',
+          //   options: {
+          //     // data: `
+          //     //   @import "@/styles/base/_index.scss";
+          //     // `
+          //   }
+          // }
         ]
       },
       {
@@ -37,7 +46,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPligin(),
+    new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',

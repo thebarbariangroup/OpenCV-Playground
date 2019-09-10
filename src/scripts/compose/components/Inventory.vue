@@ -67,13 +67,15 @@ export default {
 
 <style lang="scss">
 .inventory {
+  &_content-container {
+    height: 100%;
+  }
+
   &_items {
     display: block;
-    min-height: 100px;
+    min-height: 100%;
     min-width: 300px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
+    padding: 8px;
     background-color: #222;
   }
 }

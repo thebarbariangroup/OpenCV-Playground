@@ -3,8 +3,8 @@
     <div class="composer_content-container">
       <div class="composer_header">Build-a-Filter Workshop</div>
       <div class="composer_controls-container">
-        <Inventory :schemas="schemas" />
         <Queue />
+        <Inventory :schemas="schemas" />
       </div>
     </div>
   </div>
@@ -44,6 +44,11 @@ export default {
 
 <style lang="scss">
 .composer {
-
+  &_controls-container {
+    margin-top: 16px;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 </style>

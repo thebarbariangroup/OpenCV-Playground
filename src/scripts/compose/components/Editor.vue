@@ -1,0 +1,106 @@
+<template>
+  <div
+    :class="['editor', { active }]"
+  >
+    <div
+      class="editor_overlay" 
+      @click="close"
+    ></div>
+    <div
+      class="editor_content-container"
+      v-if="active"
+    >
+      <div class="editor_header">
+        {{ item.schema.label }}
+      </div>
+      <div class="editor_body">
+        <template v-for="(arg, i) in item.schema.conf.args">
+          <component
+            :is="arg.input.type"
+            :key="i + arg.label"
+            v-bind="arg"
+          />
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { EventBus, events } from '../utils/EventBus';
+
+import Radio from './inputs/Radio.vue';
+import Slider from './inputs/Slider.vue';
+
+export default {
+  name: 'editor',
+  components: {
+    Radio,
+    Slider,
+  },
+  data () {
+    return {
+      item: null,
+      itemId: null,
+      active: false,
+      opts: {},
+    };
+  },
+  mounted () {
+    this.setupEventHandlers();
+  },
+  methods: {
+    setupEventHandlers () {
+      EventBus.$on(events.OPEN_EDITOR, this.open);
+      EventBus.$on(events.UPDATE_ITEM_ARG, this.updateItem);
+    },
+    open (item) {
+      this.active = true;
+      this.item = item;
+    },
+    close () {
+      this.active = false;
+    },
+  }
+};
+</script>
+
+<style lang="scss">
+.editor {
+  $this: &;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+
+  &.active {
+    pointer-events: all;
+    opacity: 1;
+  }
+
+  &_overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .3);
+  }
+
+  &_content-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 300px;
+    width: 400px;
+    max-height: 90%;
+    max-width: 80%;
+    background-color: #444;
+    transform: translate(-50%, -50%);
+  }
+}
+</style>

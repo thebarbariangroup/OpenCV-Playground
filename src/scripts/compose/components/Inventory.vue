@@ -12,10 +12,11 @@
           pull: 'clone',
           put: false,
         }"
+        :clone="onClone"
       >
         <TransformItem
           v-for="(item, i) in items"
-          :key="i + item.schema.category + item.schema.name"
+          :key="'inventory' + i + item.schema.name"
           :schema="item.schema"
           location="inventory"
         />
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+import getUniqueId from '../utils/getUniqueId';
 import draggable from 'vuedraggable';
 import TransformItem from './TransformItem.vue';
 
@@ -42,16 +44,12 @@ export default {
          return {
            schema,
            opts: this.getDefaultOpts(schema),
+           id: null,
          };
       })
     }
   },
-  mounted () {
-    this.init();
-  },
   methods: {
-    init () {
-    },
     getDefaultOpts (schema) {
       const defaultConf = {};
 
@@ -60,6 +58,11 @@ export default {
       });
 
       return defaultConf;
+    },
+    onClone (item) {
+      const clone = Object.assign({}, item);
+      clone.id = getUniqueId();
+      return clone;
     }
   }
 };

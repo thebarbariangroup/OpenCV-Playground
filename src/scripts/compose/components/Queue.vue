@@ -12,11 +12,11 @@
       >
         <TransformItem
           v-for="(item, i) in items"
-          :key="i + item.schema.category + item.schema.name"
+          :key="'queue' + i + item.schema.name"
           :schema="item.schema"
           :opts="item.opts"
-          :idx="i"
           location="queue"
+          :id="item.id"
         />
       </draggable>
     </div>
@@ -25,6 +25,7 @@
 
 <script>
 import { EventBus, events } from '../utils/EventBus.js';
+import getUniqueId from '../utils/getUniqueId';
 
 import draggable from 'vuedraggable';
 
@@ -36,6 +37,7 @@ const DEFAULT_ITEMS = [
   {
     schema: schemas[0],
     opts: {},
+    id: getUniqueId(),
   }
 ];
 
@@ -75,10 +77,19 @@ export default {
   methods: {
     setupEventHandlers () {
       EventBus.$on(events.SOCKET_OPEN, this.updateComposition);
-      EventBus.$on(events.QUEUE_REMOVE_ITEM, this.removeItem);
+      EventBus.$on(events.REMOVE_ITEM, this.removeItem);
+      EventBus.$on(events.UPDATE_ITEM, this.updateItem);
     },
-    removeItem (idx) {
-      this.items.splice(idx, 1);
+    getItemId (item) {
+      return typeof item.id === 'number' ? item.id : getUniqueId();
+    },
+    removeItem (id) {
+      debugger;
+      this.items = this.items.filter((item) => item.id !== id);
+      this.updateComposition();
+    },
+    updateItem (id, item) {
+      // this.items.splice(id, 1, item);
       this.updateComposition();
     },
     updateComposition () {
@@ -95,7 +106,9 @@ export default {
       });
     },
     onChange (e) {
-      console.log(e);
+      // console.log(e);
+      // console.log(this.items);
+      // debugger;
       this.updateComposition();
     }
   }

@@ -7,6 +7,7 @@
         <Inventory :schemas="schemas" />
       </div>
     </div>
+    <Editor />
   </div>
 </template>
 
@@ -18,27 +19,19 @@ import draggable from 'vuedraggable';
 
 import Inventory from './Inventory.vue';
 import Queue from './Queue.vue';
+import Editor from './Editor.vue';
 
 export default {
   components: {
     Inventory,
     Queue,
+    Editor,
   },
   data () {
     return {
       schemas,
     };
   },
-  mounted () {
-    // this.$nextTick(() => {
-      this.init();
-    // });
-  },
-  methods: {
-    init () {
-      const containers = this.$el.querySelectorAll('.DragContainer');
-    },
-  }
 }
 </script>
 

@@ -29,32 +29,27 @@ export default {
   },
   methods: {
     setupEventHandlers () {
-      this.onUpdateComposition = this.onUpdateComposition.bind(this);
       EventBus.$on(events.UPDATE_COMPOSITION, this.onUpdateComposition);
-
-      this.onConnectionOpen = this.onConnectionOpen.bind(this);
       this.connection.onopen = this.onConnectionOpen;
-
-      this.connection.onerror = (error) => {
-        console.log('socket error', error);
-      };
-
-      this.connection.onmessage = this.onMessage;
+      this.connection.onerror = this.onConnectionError;
+      this.connection.onmessage = this.onConnectionMessage;
     },
     onConnectionOpen () {
       EventBus.$emit(events.SOCKET_OPEN);
     },
+    onConnectionError () {
+      console.log('socket error', error);
+    },
     onUpdateComposition (composition) {
-      console.log('updateComposition', composition);
+      // console.log('updateComposition', composition);
       this.sendMessage('UPDATE_COMPOSITION', composition);
     },
     sendMessage (action, payload) {
       const message = JSON.stringify({ action, payload });
       this.connection.send(message);
     },
-    onMessage (message) {
+    onConnectionMessage (message) {
       const messageData = this.jsonParse(message.data);
-      console.log('socket onMessage', messageData);
     },
     jsonParse (string) {
       var obj;

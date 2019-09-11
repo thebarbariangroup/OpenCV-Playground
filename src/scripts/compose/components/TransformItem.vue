@@ -27,26 +27,26 @@ import Radio from './inputs/Radio.vue';
 import Slider from './inputs/Slider.vue';
 
 export default {
-  components: {
-    // Radio,
-    // Slider,
-  },
   props: {
     schema: Object,
     opts: Object,
-    idx: Number,
+    id: Number,
     location: String, // 'inventory' or 'queue'
   },
   methods: {
     onDeleteClick () {
       if (this.location === 'queue') {
-        EventBus.$emit(events.QUEUE_REMOVE_ITEM, this.idx);
+        EventBus.$emit(events.REMOVE_ITEM, this.id);
       }
     },
     onEditClick () {
       if (this.location === 'queue') {
-        EventBus.$emit(events.OPEN_EDITOR, this.$props);
-      }    
+        EventBus.$emit(events.OPEN_EDITOR, {
+          id: this.id,
+          schema: this.schema,
+          opts: this.opts,
+        });
+      }
     }
   }
 }
@@ -65,14 +65,16 @@ export default {
 
   &_label {
     display: block;
+    flex-grow: 1;
   }
 
   &_delete,
   &_edit {
+    flex-shrink: 0;
     cursor: pointer;
     display: block;
-    padding: 0px;
-    margin: 0px;
+    padding: 0px 4px;
+    margin: 0px 8px;
     border: none;
     background-color: transparent;
   }
@@ -82,6 +84,7 @@ export default {
   }
 
   &_edit {
+    text-align: right;
     color: #DDD;
   }
 }

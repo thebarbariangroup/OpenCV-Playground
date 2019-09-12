@@ -84,12 +84,15 @@ export default {
       return typeof item.id === 'number' ? item.id : getUniqueId();
     },
     removeItem (id) {
-      debugger;
       this.items = this.items.filter((item) => item.id !== id);
       this.updateComposition();
     },
-    updateItem (id, item) {
-      // this.items.splice(id, 1, item);
+    updateItem (payload) {
+      this.items.forEach((item, i) => {
+        if (item.id === payload.itemId) {
+          this.items[i].opts = Object.assign(item.opts, payload.newOpts);
+        }
+      });
       this.updateComposition();
     },
     updateComposition () {
@@ -106,9 +109,6 @@ export default {
       });
     },
     onChange (e) {
-      // console.log(e);
-      // console.log(this.items);
-      // debugger;
       this.updateComposition();
     }
   }

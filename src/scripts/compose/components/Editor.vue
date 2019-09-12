@@ -16,6 +16,7 @@
           <component
             :is="arg.input.type"
             :key="i + arg.label"
+            :item="item"
             v-bind="arg"
           />
         </template>
@@ -28,18 +29,17 @@
 import { EventBus, events } from '../utils/EventBus';
 
 import Radio from './inputs/Radio.vue';
-import Slider from './inputs/Slider.vue';
+import Range from './inputs/Range.vue';
 
 export default {
   name: 'editor',
   components: {
     Radio,
-    Slider,
+    Range,
   },
   data () {
     return {
       item: null,
-      itemId: null,
       active: false,
       opts: {},
     };
@@ -50,7 +50,6 @@ export default {
   methods: {
     setupEventHandlers () {
       EventBus.$on(events.OPEN_EDITOR, this.open);
-      EventBus.$on(events.UPDATE_ITEM_ARG, this.updateItem);
     },
     open (item) {
       this.active = true;
@@ -112,6 +111,10 @@ export default {
     background-color: transparent;
     color: #DDD;
     cursor: pointer;
+  }
+
+  &_body {
+    margin-top: 24px;
   }
 }
 </style>

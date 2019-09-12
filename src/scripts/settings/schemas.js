@@ -34,8 +34,9 @@ export default [
           label: 'Value',
           defaultValue: 255,
           input: {
-            type: 'slider',
-            range: [0, 255],
+            type: 'range',
+            min: 0,
+            max: 255,
           },
         },
       ],
@@ -64,8 +65,9 @@ export default [
           label: 'Threshold 1',
           defaultValue: 50,
           input: {
-            type: 'slider',
-            range: [0, 255],
+            type: 'range',
+            min: 0,
+            max: 255,
           },
         },
         {
@@ -73,8 +75,9 @@ export default [
           label: 'Threshold 2',
           defaultValue: 50,
           input: {
-            type: 'slider',
-            range: [0, 255],
+            type: 'range',
+            min: 0,
+            max: 255,
           },
         },
       ]

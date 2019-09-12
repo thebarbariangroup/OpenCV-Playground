@@ -1,6 +1,6 @@
 <template>
-  <div class="radio-input">
-    RADIO
+  <div class="editor-input radio-input">
+    <input type="radio">
   </div>
 </template>
 

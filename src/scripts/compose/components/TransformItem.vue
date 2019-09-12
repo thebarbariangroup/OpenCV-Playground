@@ -23,9 +23,6 @@
 <script>
 import { EventBus, events } from '../utils/EventBus';
 
-import Radio from './inputs/Radio.vue';
-import Slider from './inputs/Slider.vue';
-
 export default {
   props: {
     schema: Object,

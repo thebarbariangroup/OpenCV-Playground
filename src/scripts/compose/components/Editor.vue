@@ -2,17 +2,15 @@
   <div
     :class="['editor', { active }]"
   >
-    <div
-      class="editor_overlay" 
-      @click="close"
-    ></div>
+    <div class="editor_overlay" @click="close"></div>
     <div
       class="editor_content-container"
       v-if="active"
     >
-      <div class="editor_header">
+      <h2 class="editor_header">
         {{ item.schema.label }}
-      </div>
+      </h2>
+      <button class="editor_close" @click="close">close</button>
       <div class="editor_body">
         <template v-for="(arg, i) in item.schema.conf.args">
           <component
@@ -99,8 +97,21 @@ export default {
     width: 400px;
     max-height: 90%;
     max-width: 80%;
+    padding: 16px;
     background-color: #444;
     transform: translate(-50%, -50%);
+  }
+
+  &_close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 8px;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    color: #DDD;
+    cursor: pointer;
   }
 }
 </style>

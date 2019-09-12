@@ -1,7 +1,7 @@
 <template>
   <div class="queue">
     <div class="queue_content-container">
-      <div class="queue_header">Queue</div>
+      <h2 class="queue_header">Queue</h2>
       <draggable
         class="queue_items"
         ref="list"
@@ -117,14 +117,18 @@ export default {
 
 <style lang="scss">
 .queue {
+  flex: 0 1 300px;
+  margin-right: 16px;
+
   &_content-container {
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   &_items {
+    flex-grow: 1;
     display: block;
-    min-height: 100%;
-    min-width: 300px;
     padding: 8px;
     background-color: #222;
   }

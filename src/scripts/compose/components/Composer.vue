@@ -1,7 +1,7 @@
 <template>
   <div class="composer">
     <div class="composer_content-container">
-      <div class="composer_header">Build-a-Filter Workshop</div>
+      <h1 class="composer_header">Build-a-Filter Workshop</h1>
       <div class="composer_controls-container">
         <Queue />
         <Inventory :schemas="schemas" />
@@ -38,10 +38,11 @@ export default {
 <style lang="scss">
 .composer {
   &_controls-container {
-    margin-top: 16px;
-    max-width: 700px;
     display: flex;
-    justify-content: space-between;
+  }
+
+  &_header {
+    margin-bottom: 8px;
   }
 }
 </style>

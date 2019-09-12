@@ -1,7 +1,7 @@
 <template>
   <div class="inventory">
     <div class="inventory_content-container">
-      <div class="inventory_header">Inventory</div>
+      <h2 class="inventory_header">Inventory</h2>
       <draggable
         class="inventory_items"
         ref="list"
@@ -72,12 +72,14 @@ export default {
 .inventory {
   &_content-container {
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   &_items {
+    flex-grow: 1;
     display: block;
-    min-height: 100%;
-    min-width: 300px;
+    min-width: 200px;
     padding: 8px;
     background-color: #222;
   }

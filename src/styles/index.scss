@@ -7,6 +7,8 @@ body {
   font-size: $font-size;
   background-color: #000;
   color: #FF0;
+  height: 100%;
+  width: 100%;
 }
 
 .image-groups {
@@ -32,4 +34,18 @@ body {
     transform: scale(-1) rotateX(180deg);
     background-color: pink;
   }
+}
+
+h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
 }

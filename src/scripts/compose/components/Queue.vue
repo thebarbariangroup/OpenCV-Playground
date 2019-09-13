@@ -14,7 +14,7 @@
           v-for="(item, i) in items"
           :key="'queue' + i + item.schema.name"
           :schema="item.schema"
-          :opts="item.opts"
+          :argState="item.argState"
           location="queue"
           :id="item.id"
         />
@@ -24,20 +24,20 @@
 </template>
 
 <script>
+import schemas from '../../settings/schemas';
 import { EventBus, events } from '../utils/EventBus.js';
-import getUniqueId from '../utils/getUniqueId';
+import { getUniqueId } from '../utils/helpers';
 
 import draggable from 'vuedraggable';
 
 import TransformItem from './TransformItem.vue';
 
-import schemas from '../../settings/schemas';
 
 const DEFAULT_ITEMS = [
   {
-    schema: schemas[0],
-    opts: {},
     id: getUniqueId(),
+    schema: schemas[0],
+    argState: {},
   }
 ];
 
@@ -49,14 +49,6 @@ const DEFAULT_ITEMS = [
  *   name: 'grayscale',
  *   opts: {}
  * },
- * {
- *   category: 'alter',
- *   name: 'setChannel',
- *   opts: {
- *     idx: 3,
- *     val: 255,
- *   }
- * }
  * 
  * */
 
@@ -90,7 +82,7 @@ export default {
     updateItem (payload) {
       this.items.forEach((item, i) => {
         if (item.id === payload.itemId) {
-          this.items[i].opts = Object.assign(item.opts, payload.newOpts);
+          this.items[i].argState = Object.assign(item.argState, payload.newArgState);
         }
       });
       this.updateComposition();
@@ -104,9 +96,21 @@ export default {
         return {
           category: item.schema.category,
           name: item.schema.name,
-          opts: item.opts,
+          opts: this.resolveTransformOpts(item),
         };
       });
+    },
+    resolveTransformOpts (item) {
+      const argState = item.argState;
+      const opts = {};
+
+      Object.keys(argState).forEach((k) => {
+        const argSchema = item.schema.conf.args.find((arg) => arg.name === k);
+        const useInactiveValue = argSchema.optional && !argState[k].active;
+        opts[k] = useInactiveValue ? argSchema.input.inactiveValue : argState[k].value;
+      });
+
+      return opts;
     },
     onChange (e) {
       this.updateComposition();

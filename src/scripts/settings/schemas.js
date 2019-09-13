@@ -16,27 +16,55 @@ export default [
     conf: {
       args: [
         {
-          name: 'idx',
-          label: 'Channel',
-          defaultValue: 3,
-          input: {
-            type: 'radio',
-            values: [
-              { k: 'red', v: 0 },
-              { k: 'green', v: 1 },
-              { k: 'blue', v: 2 },
-              { k: 'alpha', v: 3 },
-            ],
-          },
-        },
-        {
-          name: 'val',
-          label: 'Value',
+          name: 'r',
+          label: 'Red',
           defaultValue: 255,
+          optional: true,
+          defaultActive: true,
           input: {
             type: 'range',
             min: 0,
             max: 255,
+            inactiveValue: 'unchanged',
+          },
+        },
+        {
+          name: 'g',
+          label: 'Green',
+          defaultValue: 255,
+          optional: true,
+          defaultActive: false,
+          input: {
+            type: 'range',
+            min: 0,
+            max: 255,
+            inactiveValue: 'unchanged',
+          },
+        },
+        {
+          name: 'b',
+          label: 'Blue',
+          defaultValue: 255,
+          optional: true,
+          defaultActive: false,
+          input: {
+            type: 'range',
+            min: 0,
+            max: 255,
+            inactiveValue: 'unchanged',
+          },
+        },
+        {
+          name: 'a',
+          label: 'Alpha',
+          defaultValue: 255,
+          optional: true,
+          defaultActive: false,
+          input: {
+            type: 'range',
+            min: 0,
+            max: 255,
+            inactiveValue: 'unchanged',
           },
         },
       ],
@@ -262,23 +290,45 @@ export default [
         {
           name: 't1',
           label: 'Threshold 1',
-          defaultValue: 50,
+          defaultActive: true,
+          defaultValue: 100,
           input: {
-            type: 'slider',
-            range: [0, 255],
+            type: 'range',
+            min: 0,
+            max: 255,
+            inactiveValue: 'unchanged',
           },
         },
         {
           name: 't2',
           label: 'Threshold 2',
-          defaultValue: 50,
+          defaultActive: true,
+          defaultValue: 100,
           input: {
-            type: 'slider',
-            range: [0, 255],
+            type: 'range',
+            min: 0,
+            max: 255,
+            inactiveValue: 'unchanged',
           },
         },
       ]
     },
   },
+
+
+          // {
+        //   name: 'idx',
+        //   label: 'Channel',
+        //   defaultValue: 0,
+        //   input: {
+        //     type: 'radio',
+        //     values: [
+        //       { k: 'red', v: 0 },
+        //       { k: 'green', v: 1 },
+        //       { k: 'blue', v: 2 },
+        //       { k: 'alpha', v: 3 },
+        //     ],
+        //   },
+        // },
 
 ];

@@ -1,27 +1,38 @@
 <script>
 import { EventBus, events } from "../../utils/EventBus";
+import { debounce } from "../../utils/helpers";
 
 export default {
   name: 'InputBase',
   props: {
     item: Object,
+    name: String,
+    label: String,
+    defaultValue: Number,
+    optional: Boolean,
+    input: Object,
+  },
+  data () {
+    return {
+      active: this.getInitalActiveState(),
+    };
   },
   methods: {
-    onChange (newOpts) {
-      this.debounce(() => {
+    onChange (newArgState) {
+      debounce(() => {
         const payload = {
-          newOpts,
+          newArgState,
           itemId: this.item.id,
         };
         EventBus.$emit(events.UPDATE_ITEM, payload);
-      });
-    },
-    debounce (fn) {
-      clearTimeout(this.debounceTimer);
-      this.debounceTimer = setTimeout(() => {
-        fn();
       }, 250);
-    }
+    },
+    getInitalActiveState () {
+      if (this.optional) {
+        return this.item.argState[this.name].active;
+      }
+      return true;
+    },
   },
 };
 </script>

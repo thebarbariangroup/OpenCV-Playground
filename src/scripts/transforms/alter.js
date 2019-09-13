@@ -7,15 +7,24 @@ export default {
     const cache = cacheController.getCache(conf, 'setChannel');
 
     return function (src, dst) {
-      cache.use('newPlane', () => {
-        const color = new cv.Scalar(conf.val);
-        return new cv.Mat(src.rows, src.cols, cv.CV_8U, color);
+      cache.use('newPlanes', () => {
+        return ['r', 'g', 'b', 'a'].map((key) => {
+          if (typeof conf[key] === 'number') {
+            const color = new cv.Scalar(conf[key]);
+            return new cv.Mat(src.rows, src.cols, cv.CV_8U, color);
+          }
+          return null;
+        });
       });
 
       const planes = new cv.MatVector();
 
       cv.split(src, planes);
-      planes.set(conf.idx, cache.newPlane);
+      cache.newPlanes.forEach((newPlane, i) => {
+        if (newPlane) {
+          planes.set(i, newPlane);
+        }
+      });
       cv.merge(planes, dst);
 
       planes.delete();

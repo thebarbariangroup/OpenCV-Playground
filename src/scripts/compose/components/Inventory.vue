@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import getUniqueId from '../utils/getUniqueId';
+import { getUniqueId } from '../utils/helpers';
 import draggable from 'vuedraggable';
 import TransformItem from './TransformItem.vue';
 
@@ -41,20 +41,23 @@ export default {
   data () {
     return {
       items: this.schemas.map((schema) => {
-         return {
-           schema,
-           opts: this.getDefaultOpts(schema),
-           id: null,
-         };
+        return {
+          schema,
+          argState: this.getDefaultArgState(schema),
+          id: null,
+        };
       })
-    }
+    };
   },
   methods: {
-    getDefaultOpts (schema) {
+    getDefaultArgState (schema) {
       const defaultConf = {};
 
       schema.conf.args.forEach((arg) => {
-        defaultConf[arg.name] = arg.defaultValue;
+        defaultConf[arg.name] = {
+          active: arg.defaultActive,
+          value: arg.defaultValue,
+        };
       });
 
       return defaultConf;

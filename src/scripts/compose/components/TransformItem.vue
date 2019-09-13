@@ -5,7 +5,7 @@
     </div>
     <button
       class="transform-item_edit"
-      v-show="location === 'queue'"
+      v-show="location === 'queue' && schema.conf.args.length > 0"
       @click="onEditClick"
     >
       edit
@@ -26,7 +26,7 @@ import { EventBus, events } from '../utils/EventBus';
 export default {
   props: {
     schema: Object,
-    opts: Object,
+    argState: Object,
     id: Number,
     location: String, // 'inventory' or 'queue'
   },
@@ -41,7 +41,7 @@ export default {
         EventBus.$emit(events.OPEN_EDITOR, {
           id: this.id,
           schema: this.schema,
-          opts: this.opts,
+          argState: this.argState,
         });
       }
     }

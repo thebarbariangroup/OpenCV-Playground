@@ -82,7 +82,7 @@ export default {
     updateItem (payload) {
       this.items.forEach((item, i) => {
         if (item.id === payload.itemId) {
-          this.items[i].argState = Object.assign(item.argState, payload.newArgState);
+          this.items[i].argState = Object.assign({}, item.argState, payload.newArgState);
         }
       });
       this.updateComposition();
@@ -114,7 +114,7 @@ export default {
     },
     onChange (e) {
       this.updateComposition();
-    }
+    },
   }
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
-  <div class="editor-input range-input">
+  <div class="editor-input number-input">
     <div
       v-if="optional"
-      class="range-input_toggle"
+      class="number-input_toggle"
     >
       <input
         type="checkbox"
@@ -12,14 +12,14 @@
     </div>
     <label :for="name">{{ label }}</label>
     <input
-      type="range"
+      class="number-input_input"
+      type="number"
       :name="name"
       :max="input.max"
       :min="input.min"
       :step="input.step"
       v-model="value"
     >
-    <span class="range-input_value"> {{ value }} </span>
   </div>
 </template>
 
@@ -27,7 +27,7 @@
 import InputBase from './InputBase.vue';
 
 export default {
-  name: 'range',
+  name: 'number',
   extends: InputBase,
   data () {
     return {
@@ -56,14 +56,16 @@ export default {
 </script>
 
 <style lang="scss">
-.range-input {
-  &_value {
-    display: inline-block;
-  }
-
+.number-input {
   &_toggle {
     display: inline-block;
     margin-right: 10px;
+  }
+
+  &_input {
+    margin-left: 10px;
+    display: inline-block;
+    width: 50px;
   }
 }
 </style>

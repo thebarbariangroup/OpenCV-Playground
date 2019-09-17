@@ -14,6 +14,7 @@
       <div class="editor_body">
         <template v-for="(arg, i) in item.schema.conf.args">
           <component
+            v-if="!arg.hidden"
             :is="arg.input.type"
             :key="i + arg.label"
             :item="item"
@@ -30,12 +31,14 @@ import { EventBus, events } from '../utils/EventBus';
 
 import Radio from './inputs/Radio.vue';
 import Range from './inputs/Range.vue';
+import Number from './inputs/Number.vue';
 
 export default {
   name: 'editor',
   components: {
     Radio,
     Range,
+    Number,
   },
   data () {
     return {

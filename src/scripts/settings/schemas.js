@@ -18,9 +18,8 @@ export default [
         {
           name: 'r',
           label: 'Red',
-          defaultValue: 255,
+          defaultValue: 0,
           optional: true,
-          defaultActive: true,
           input: {
             type: 'range',
             min: 0,
@@ -31,9 +30,9 @@ export default [
         {
           name: 'g',
           label: 'Green',
-          defaultValue: 255,
+          defaultValue: 0,
+          defaultActive: true,
           optional: true,
-          defaultActive: false,
           input: {
             type: 'range',
             min: 0,
@@ -44,9 +43,8 @@ export default [
         {
           name: 'b',
           label: 'Blue',
-          defaultValue: 255,
+          defaultValue: 0,
           optional: true,
-          defaultActive: false,
           input: {
             type: 'range',
             min: 0,
@@ -59,7 +57,6 @@ export default [
           label: 'Alpha',
           defaultValue: 255,
           optional: true,
-          defaultActive: false,
           input: {
             type: 'range',
             min: 0,
@@ -139,17 +136,31 @@ export default [
         {
           name: 'dx',
           label: 'Horizontal',
-          defaultValue: 10,
+          defaultValue: 1,
+          input: {
+            type: 'number',
+            min: 0,
+            max: 4,
+          },
         },
         {
           name: 'dy',
           label: 'Vertical',
-          defaultValue: 10,
+          defaultValue: 1,
+          input: {
+            type: 'number',
+            min: 0,
+            max: 4,
+          },
         },
         {
           name: 'ksize',
           label: 'Kernel',
           defaultValue: 5,
+          input: {
+            type: 'number',
+            min: 0,
+          },
         },
       ],
     },
@@ -165,16 +176,29 @@ export default [
           name: 'scale',
           label: 'Scale',
           defaultValue: 1,
+          input: {
+            type: 'number',
+            min: 1,
+          },
         },
         {
           name: 'delta',
           label: 'Delta',
           defaultValue: 0,
+          input: {
+            type: 'number',
+            min: 0,
+          },
         },
         {
           name: 'ksize',
           label: 'Kernel',
           defaultValue: 5,
+          input: {
+            type: 'number',
+            min: 1,
+            step: 2,
+          },
         },
       ],
     }, 
@@ -192,11 +216,17 @@ export default [
           name: 'ksize',
           label: 'Kernel',
           defaultValue: 5,
+          input: {
+            type: 'number',
+            min: 1,
+            step: 2,
+          },
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
+          hidden: true,
         },
       ],
     },
@@ -212,11 +242,17 @@ export default [
           name: 'ksize',
           label: 'Kernel',
           defaultValue: 5,
+          input: {
+            type: 'number',
+            min: 1,
+            step: 2,
+          },
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
+          hidden: true,
         },
       ],
     },
@@ -234,11 +270,17 @@ export default [
           name: 'ksize',
           label: 'Kernel',
           defaultValue: 5,
+          input: {
+            type: 'number',
+            min: 1,
+            step: 2,
+          },
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
+          hidden: true,
         },
       ],
     },
@@ -254,6 +296,11 @@ export default [
           name: 'ksize',
           label: 'Kernel',
           defaultValue: 5,
+          input: {
+            type: 'number',
+            min: 1,
+            step: 2,
+          },
         },
       ],
     },
@@ -269,11 +316,17 @@ export default [
           name: 'size',
           label: 'Size',
           defaultValue: 7,
+          input: {
+            type: 'number',
+            min: 1,
+            step: 2,
+          },
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
+          hidden: true,
         },
       ],
     },
@@ -290,7 +343,6 @@ export default [
         {
           name: 't1',
           label: 'Threshold 1',
-          defaultActive: true,
           defaultValue: 100,
           input: {
             type: 'range',
@@ -302,8 +354,7 @@ export default [
         {
           name: 't2',
           label: 'Threshold 2',
-          defaultActive: true,
-          defaultValue: 100,
+          defaultValue: 0,
           input: {
             type: 'range',
             min: 0,

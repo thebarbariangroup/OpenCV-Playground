@@ -25,7 +25,6 @@ export default {
           newArgState,
           itemId: this.item.id,
         };
-        // console.log(payload.itemId);
         EventBus.$emit(events.UPDATE_ITEM, payload);
       }, 250, this.debounceTimer);
     },

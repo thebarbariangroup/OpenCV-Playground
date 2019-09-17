@@ -61,11 +61,11 @@ class CacheController {
   }
 
   _flattenToArray (obj) {
-    const flattened = [];
+    let flattened = [];
 
     Object.keys(obj).forEach((key) => {
       if (typeof obj[key] === 'object' && obj[key] !== null) {
-        Object.assign(flattened, this._flattenToArray(obj[key]));
+        flattened = flattened.concat(this._flattenToArray(obj[key]));
       } else {
         flattened.push(`${key}:${obj[key]}`);
       }

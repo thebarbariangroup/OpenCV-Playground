@@ -5,11 +5,9 @@ export function getUniqueId () {
 }
 
 
-let debounceTimer;
-
-export function debounce (fn, time) {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
+export function debounce (fn, time, timer) {
+  clearTimeout(timer);
+  return setTimeout(() => {
     fn();
   }, time);
 }

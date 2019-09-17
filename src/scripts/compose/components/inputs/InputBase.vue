@@ -9,8 +9,9 @@ export default {
     name: String,
     label: String,
     defaultValue: Number,
-    optional: Boolean,
     input: Object,
+    optional: Boolean,
+    hidden: Boolean,
   },
   data () {
     return {
@@ -19,13 +20,14 @@ export default {
   },
   methods: {
     onChange (newArgState) {
-      debounce(() => {
+      this.debounceTimer = debounce(() => {
         const payload = {
           newArgState,
           itemId: this.item.id,
         };
+        // console.log(payload.itemId);
         EventBus.$emit(events.UPDATE_ITEM, payload);
-      }, 250);
+      }, 250, this.debounceTimer);
     },
     getInitalActiveState () {
       if (this.optional) {

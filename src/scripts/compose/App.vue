@@ -23,7 +23,7 @@ export default {
     };
   },
   mounted () {
-    this.connection = new WebSocket('ws://localhost:1337');
+    this.connection = new WebSocket(`wss://${location.hostname}:8443`);
 
     this.setupEventHandlers();
   },
@@ -37,7 +37,7 @@ export default {
     onConnectionOpen () {
       EventBus.$emit(events.SOCKET_OPEN);
     },
-    onConnectionError () {
+    onConnectionError (error) {
       console.log('socket error', error);
     },
     onUpdateComposition (composition) {

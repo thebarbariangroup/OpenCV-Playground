@@ -14,7 +14,7 @@ export default class OutputController {
   }
 
   _init () {
-    this.connection = new WebSocket('ws://localhost:1337');
+    this.connection = new WebSocket(`wss://${location.hostname}:8443`);
 
     this._setupEventHandlers();
   }

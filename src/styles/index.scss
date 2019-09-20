@@ -11,6 +11,16 @@ body {
   width: 100%;
 }
 
+.content {
+  padding: 40px;
+  
+  a {
+   color: white;
+   font-size: 32px;
+   margin-bottom: 16px; 
+  }
+}
+
 .image-groups {
   display: flex;
   flex-wrap: wrap;

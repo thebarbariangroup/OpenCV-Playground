@@ -73,7 +73,10 @@ export default {
 
 <style lang="scss">
 .inventory {
+  flex: 1 1 40%;
+
   &_content-container {
+    min-height: 85vh;
     height: 100%;
     display: flex;
     flex-direction: column;

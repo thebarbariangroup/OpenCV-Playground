@@ -121,10 +121,11 @@ export default {
 
 <style lang="scss">
 .queue {
-  flex: 0 1 300px;
-  margin-right: 16px;
+  flex: 1 1 60%;
+  padding-right: 16px;
 
   &_content-container {
+    min-height: 85vh;
     height: 100%;
     display: flex;
     flex-direction: column;

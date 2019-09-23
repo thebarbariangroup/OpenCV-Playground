@@ -22,7 +22,7 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use:  [
+        use: [
           // {
           //   loader: MiniCssExtractPlugin.loader,
           // },
@@ -42,6 +42,13 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+        },
       }
     ]
   },

@@ -99,6 +99,20 @@ export default {
           opts: this.resolveTransformOpts(item),
         };
       });
+
+      // Forcefully raise opacity for ease of use
+      // TODO: make this behavior toggleable
+      this.composition.push({
+        category: 'alter',
+        name: 'setChannel',
+        opts: {
+          r: 'unchanged',
+          g: 'unchanged',
+          b: 'unchanged',
+          a: 255,
+        },
+      });
+
     },
     resolveTransformOpts (item) {
       const argState = item.argState;

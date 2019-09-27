@@ -11,11 +11,12 @@ export default class OutputController {
     this.output = conf.output;
 
     this._init();
-  }
+  } 
 
   _init () {
     this.connection = new WebSocket(`wss://${location.hostname}:8443`);
 
+    this._handleQueryOptions();
     this._setupEventHandlers();
   }
 
@@ -30,6 +31,18 @@ export default class OutputController {
 
     this._onMessage = this._onMessage.bind(this);
     this.connection.onmessage = this._onMessage;
+  }
+
+  _handleQueryOptions () {
+    const query = location.search.replace('?', '');
+
+    query.split('&').forEach((pair) => {
+      const splitPair = pair.split('=');
+
+      if (splitPair[0] === 'layout' && splitPair[1] === 'rotate') {
+        document.body.classList.add('rotate');
+      }
+    });
   }
 
   play () {

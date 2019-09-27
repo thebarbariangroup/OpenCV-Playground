@@ -1,5 +1,9 @@
 @import 'base/_index';
 
+html {
+  height: 100%;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -58,4 +62,46 @@ h2 {
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
+}
+
+body.rotate {
+  .image-groups {
+    display: block;
+    height: 100%;
+  }
+
+  .image-group {
+    height: 100%;
+    width: 100%;
+    max-width: none;
+
+    &--data {
+      display: none;
+    }
+
+    &_title {
+      display: none;
+    }
+
+    &_image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vh;
+      height: 100vw;
+      max-width: none;
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+
+  #canvasOutput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    transform: scale(-1, 1);
+    object-fit: cover;
+  }
+
 }

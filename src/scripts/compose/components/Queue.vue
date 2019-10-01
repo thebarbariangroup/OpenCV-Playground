@@ -7,6 +7,8 @@
         ref="list"
         v-model="items"
         group="transformItems"
+        filter=".no-drag"
+        :preventOnFilter="false"
         animation="150"
         @change="onChange"
       >

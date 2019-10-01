@@ -4,14 +4,14 @@
       {{ schema.label }}
     </div>
     <button
-      class="transform-item_edit"
+      class="transform-item_edit no-drag"
       v-show="location === 'queue' && schema.conf.args.length > 0"
       @click="onEditClick"
     >
       edit
     </button>
     <button
-      class="transform-item_delete"
+      class="transform-item_delete no-drag"
       v-show="location === 'queue'"
       @click="onDeleteClick"
     >

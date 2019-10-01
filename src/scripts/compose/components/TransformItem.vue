@@ -63,6 +63,7 @@ export default {
   &_label {
     display: block;
     flex-grow: 1;
+    margin: 8px;
   }
 
   &_delete,
@@ -70,8 +71,8 @@ export default {
     flex-shrink: 0;
     cursor: pointer;
     display: block;
-    padding: 0px 4px;
-    margin: 0px 8px;
+    padding: 8px;
+    margin: 0px 4px;
     border: none;
     background-color: transparent;
   }

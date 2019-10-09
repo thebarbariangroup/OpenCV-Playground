@@ -1,5 +1,6 @@
 <template>
   <div class="transform-item">
+    <div class="transform-item_handle drag-handle"></div>
     <div class="transform-item_label">
       {{ schema.label }}
     </div>
@@ -52,13 +53,33 @@ export default {
 <style lang="scss">
 .transform-item {
   position: relative;
-  cursor: pointer;
   user-select: none;
-  padding: 8px;
+  padding: 8px 8px 8px 40px;
   margin-bottom: 4px;
   display: flex;
   justify-content: space-between;
   background-color: #444;
+  border-radius: 4px;
+  overflow: hidden;
+
+  &_handle {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 36px;
+    background-color: grey;
+
+    &::after {
+      content: '::';
+      position: inline-block;
+      color: #444;
+      font-size: 48px;
+      line-height: 100%;
+      margin: 0 0 2px 4px;
+    }
+  }
 
   &_label {
     display: block;

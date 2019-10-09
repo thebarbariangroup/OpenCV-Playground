@@ -67,6 +67,6 @@ export default {
 
 <style lang="scss">
 #app {
-  margin: 32px;
+  padding: 32px;
 }
 </style>

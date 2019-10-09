@@ -12,6 +12,7 @@
           pull: 'clone',
           put: false,
         }"
+        handle=".drag-handle"
         :clone="onClone"
       >
         <TransformItem
@@ -76,8 +77,7 @@ export default {
   flex: 1 1 40%;
 
   &_content-container {
-    min-height: 85vh;
-    height: 100%;
+    height: 80vh;
     display: flex;
     flex-direction: column;
   }
@@ -88,6 +88,7 @@ export default {
     min-width: 200px;
     padding: 8px;
     background-color: #222;
+    overflow-y: auto;
   }
 }
 </style>

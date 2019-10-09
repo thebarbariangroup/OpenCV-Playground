@@ -8,6 +8,7 @@
         v-model="items"
         group="transformItems"
         filter=".no-drag"
+        handle=".drag-handle"
         :preventOnFilter="false"
         animation="150"
         @change="onChange"
@@ -141,8 +142,7 @@ export default {
   padding-right: 16px;
 
   &_content-container {
-    min-height: 85vh;
-    height: 100%;
+    height: 80vh;
     display: flex;
     flex-direction: column;
   }
@@ -152,6 +152,7 @@ export default {
     display: block;
     padding: 8px;
     background-color: #222;
+    overflow-y: auto;
   }
 }
 </style>

@@ -20,6 +20,18 @@
       :step="input.step"
       v-model="value"
     >
+    <div class="number-input_stepper">
+      <button
+        class="number-input_stepper-button number-input_stepper-button--incrementor"
+        ref="incrementor"
+        @click="onIncrement"
+      > &gt; </button>
+      <button
+        class="number-input_stepper-button number-input_stepper-button--decrementor"
+        ref="decrementor"
+        @click="onDecrement"
+      > &lt; </button>
+    </div>
   </div>
 </template>
 
@@ -52,6 +64,26 @@ export default {
       });
     },
   },
+  methods: {
+    valueIsInRange (value) {
+      return (
+        (typeof this.input.min === 'number') ? value >= this.input.min : true
+        && (typeof this.input.max === 'number') ? value <= this.input.max : true
+      );
+    },
+    onIncrement (e) {
+      const newValue = this.value + (this.input.step || 1);
+      if (this.valueIsInRange(newValue)) {
+        this.value = newValue; 
+      }
+    },
+    onDecrement (e) {
+      const newValue = this.value - (this.input.step || 1);
+      if (this.valueIsInRange(newValue)) {
+        this.value = newValue; 
+      }
+    },
+  },
 };
 </script>
 
@@ -66,6 +98,16 @@ export default {
     margin-left: 10px;
     display: inline-block;
     width: 50px;
+  }
+
+  &_stepper {
+    display: inline-block;
+
+    &-button {
+      cursor: pointer;
+      transform: rotate(-90deg);
+      font-weight: 800;
+    }
   }
 }
 </style>

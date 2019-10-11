@@ -73,11 +73,10 @@ export default {
 
     &::after {
       content: '::';
-      position: inline-block;
       color: #444;
       font-size: 48px;
-      line-height: 100%;
-      margin: 0 0 2px 4px;
+      line-height: 90%;
+      margin: 0 0 0 5px;
     }
   }
 

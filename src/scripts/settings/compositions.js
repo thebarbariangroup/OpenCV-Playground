@@ -1,122 +1,92 @@
-import transforms from '../transforms';
+export default [
 
-
-const compositions = [
-
-  {
-    name: 'Grayscale',
-    transforms: () => [
-      transforms.alter.grayscale(),
-    ],
-    // schema: {
-    //   ---SOON!---
-    // },
-  },
-
-  {
-    name: 'T-Rex Vision',
-    transforms: () => [
-      transforms.histogram.clahe(),
-      transforms.arithmetic.absoluteDifference(),
-      transforms.alter.setChannel({
-        idx: 3,
-        val: 255
-      }),
-    ],
-  },
+  // {
+  //   label: 'Line Flow',
+  //   transforms: [
+  //     {
+  //       category: 'smooth',
+  //       name: 'median',
+  //       opts: {
+  //         size: 101,
+  //         anchor: -1,
+  //       }
+  //     },
+  //     {
+  //       category: 'featureDetect',
+  //       name: 'canny',
+  //       opts: {
+  //         t1: 10,
+  //         t2: 10,
+  //       } 
+  //     },
+  //   ],
+  // },
 
   {
-    name: 'adaptiveGaussian (smoothed)',
-    transforms: () => [
-      transforms.smooth.median({
-        size: 5,
-      }),
-      transforms.threshold.adaptiveGaussian({
-        ksize: 5,
-        c: 0,
-      }),
-      transforms.alter.setChannel({
-        idx: 3,
-        val: 255,
-      }),
+    label: 'Topography',
+    transforms: [
+      {
+        category: 'histogram',
+        name: 'equalize',
+        opts: {},
+      },
+      {
+        category: 'smooth',
+        name: 'median',
+        opts: {
+          size: 47,
+          anchor: -1,
+        }
+      },
+      {
+        category: 'featureDetect',
+        name: 'canny',
+        opts: {
+          t1: 10,
+          t2: 10,
+        } 
+      },
     ]
   },
 
   {
-    name: 'Canny',
-    transforms: () => [
-      transforms.featureDetect.canny({
-        t1: 50,
-        t2: 50,
-      }),
+    label: 'Blocky Binary',
+    transforms: [
+      {
+        category: 'morph',
+        name: 'close',
+        opts: {
+          ksize: 9,
+        }
+      },
+      {
+        category: 'threshold',
+        name: 'binary',
+        opts: {
+          t1: 150,
+          t2: 0,
+        }
+      }
     ]
   },
 
   {
-    name: 'Binary Inverse',
-    transforms: () => [
-      transforms.threshold.binary({
-        t1: 100,
-        t2: 0,
-      }),
-      transforms.alter.setChannel({
-        idx: 3,
-        val: 255,
-      }),
-    ]
-  },
-
-  {
-    name: 'Line Flow',
-    transforms: () => [
-      transforms.smooth.median({
-        size: 101,
-        anchor: -1,
-      }),
-      transforms.featureDetect.canny({
-        t1: 10,
-        t2: 10,
-      }),
-    ]
-  },
-
-  {
-    name: 'Better Line Flow',
-    transforms: () => [
-      transforms.histogram.equalize(),
-      transforms.smooth.median({
-        size: 47,
-      }),
-      transforms.featureDetect.canny({
-        t1: 10,
-        t2: 10,
-      }),
-    ]
-  },
-
-  {
-    name: 'thing',
-    transforms: () => [
-      transforms.threshold.inRange({
-        lo: 100,
-        hi: 255,
-      }),
-      transforms.featureDetect.canny({
-        t1: 220,
-        t2: 220,
-      }),
-      transforms.morph.gradient({
-        kernel: 3,
-        anchor: -1,
-        iterations: 1,
-      }),
-      transforms.featureDetect.canny({
-        t1: 2,
-        t2: 2,
-      }),
+    label: 'Acid Trace',
+    transforms: [
+      {
+        category: 'threshold',
+        name: 'binary',
+        opts: {
+          t1: 84,
+          t2: 0,
+        }
+      },
+      {
+        category: 'arithmetic',
+        name: 'absoluteDifference',
+        opts: {},
+      }
     ]
   }
 
 ];
-
-export default compositions;

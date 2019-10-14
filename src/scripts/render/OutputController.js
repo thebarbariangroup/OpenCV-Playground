@@ -68,7 +68,7 @@ export default class OutputController {
     const messageData = this._jsonParse(message.data);
     console.log('socket onMessage', messageData);
 
-    if (messageData.action === 'UPDATE_COMPOSITION') {
+    if (messageData.action === 'RENDER_COMPOSITION') {
       const composition = this.buildComposition(messageData.payload);
 
       this.pause();

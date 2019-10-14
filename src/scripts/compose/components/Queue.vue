@@ -72,8 +72,9 @@ export default {
   methods: {
     setupEventHandlers () {
       EventBus.$on(events.SOCKET_OPEN, this.updateComposition);
-      EventBus.$on(events.REMOVE_ITEM, this.removeItem);
       EventBus.$on(events.UPDATE_ITEM, this.updateItem);
+      EventBus.$on(events.REMOVE_ITEM, this.removeItem);
+      EventBus.$on(events.SET_COMPOSITION, this.setComposition);
     },
     getItemId (item) {
       return typeof item.id === 'number' ? item.id : getUniqueId();
@@ -92,7 +93,7 @@ export default {
     },
     updateComposition () {
       this.buildComposition();
-      EventBus.$emit(events.UPDATE_COMPOSITION, this.composition);
+      EventBus.$emit(events.RENDER_COMPOSITION, this.composition);
     },
     buildComposition () {
       this.composition = this.items.map((item) => {
@@ -115,7 +116,34 @@ export default {
           a: 255,
         },
       });
+    },
+    setComposition (composition) {
+      this.composition = composition;
+      this.buildItemsFromComposition();
+      this.updateComposition();
+    },
+    buildItemsFromComposition () {
+      this.items = this.composition.map((transform) => {
+        const item = {
+          id: getUniqueId(),
+          schema: schemas.find((schema) => {
+            return schema.category === transform.category && schema.name === transform.name;
+          }),
+          argState: {},
+        };
 
+        Object.keys(transform.opts).forEach((k) => {
+          const argSchema = item.schema.conf.args.find((arg) => arg.name === k);
+          const active = argSchema.input ? transform.opts[k] !== argSchema.input.inactiveValue : true;
+
+          item.argState[k] = {
+            active,
+            value: active ? transform.opts[k] : argSchema.defaultValue,
+          };
+        });
+
+        return item;
+      });
     },
     resolveTransformOpts (item) {
       const argState = item.argState;

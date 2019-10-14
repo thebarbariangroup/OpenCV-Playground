@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     setupEventHandlers () {
-      EventBus.$on(events.UPDATE_COMPOSITION, this.onUpdateComposition);
+      EventBus.$on(events.RENDER_COMPOSITION, this.onUpdateComposition);
       this.connection.onopen = this.onConnectionOpen;
       this.connection.onerror = this.onConnectionError;
       this.connection.onmessage = this.onConnectionMessage;
@@ -42,7 +42,7 @@ export default {
     },
     onUpdateComposition (composition) {
       // console.log('updateComposition', composition);
-      this.sendMessage('UPDATE_COMPOSITION', composition);
+      this.sendMessage('RENDER_COMPOSITION', composition);
     },
     sendMessage (action, payload) {
       const message = JSON.stringify({ action, payload });

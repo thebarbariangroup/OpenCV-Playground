@@ -40,4 +40,9 @@ export default {
       cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
     }
   },
+  invert () {
+    return function (src, dst) {
+      cv.bitwise_not(src, dst);
+    }
+  }
 }

@@ -11,6 +11,13 @@ export default [
 
   {
     category: 'alter',
+    name: 'invert',
+    label: 'Invert',
+    conf: { args: [] },
+  },
+
+  {
+    category: 'alter',
     name: 'setChannel',
     label: 'Set RGBA',
     conf: {
@@ -187,8 +194,9 @@ export default [
           label: 'Delta',
           defaultValue: 0,
           input: {
-            type: 'number',
+            type: 'range',
             min: 0,
+            max: 255,
           }
         },
         {

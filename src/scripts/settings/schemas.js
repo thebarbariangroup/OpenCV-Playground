@@ -25,7 +25,7 @@ export default [
             min: 0,
             max: 255,
             inactiveValue: 'unchanged',
-          },
+          }
         },
         {
           name: 'g',
@@ -38,7 +38,7 @@ export default [
             min: 0,
             max: 255,
             inactiveValue: 'unchanged',
-          },
+          }
         },
         {
           name: 'b',
@@ -50,7 +50,7 @@ export default [
             min: 0,
             max: 255,
             inactiveValue: 'unchanged',
-          },
+          }
         },
         {
           name: 'a',
@@ -62,10 +62,10 @@ export default [
             min: 0,
             max: 255,
             inactiveValue: 'unchanged',
-          },
-        },
-      ],
-    },
+          }
+        }
+      ]
+    }
   },
 
   // ARITHMETIC
@@ -93,7 +93,7 @@ export default [
             type: 'range',
             min: 0,
             max: 255,
-          },
+          }
         },
         {
           name: 't2',
@@ -103,10 +103,10 @@ export default [
             type: 'range',
             min: 0,
             max: 255,
-          },
-        },
+          }
+        }
       ]
-    },
+    }
   },
 
   // HISTOGRAM 
@@ -141,29 +141,30 @@ export default [
             type: 'number',
             min: 0,
             max: 4,
-          },
+          }
         },
         {
           name: 'dy',
           label: 'Vertical',
-          defaultValue: 1,
+          defaultValue: 0,
           input: {
             type: 'number',
             min: 0,
             max: 4,
-          },
+          }
         },
         {
           name: 'ksize',
           label: 'Kernel',
-          defaultValue: 5,
+          defaultValue: 3,
           input: {
             type: 'number',
-            min: 0,
-          },
-        },
-      ],
-    },
+            min: 1,
+            step: 2,
+          }
+        }
+      ]
+    }
   },
 
   {
@@ -179,7 +180,7 @@ export default [
           input: {
             type: 'number',
             min: 1,
-          },
+          }
         },
         {
           name: 'delta',
@@ -188,7 +189,7 @@ export default [
           input: {
             type: 'number',
             min: 0,
-          },
+          }
         },
         {
           name: 'ksize',
@@ -198,10 +199,10 @@ export default [
             type: 'number',
             min: 1,
             step: 2,
-          },
-        },
-      ],
-    }, 
+          }
+        }
+      ]
+    }
   },
 
   // MORPHOLOGICAL TRANSFORMATIONS
@@ -220,16 +221,16 @@ export default [
             type: 'number',
             min: 1,
             step: 2,
-          },
+          }
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
           hidden: true,
-        },
-      ],
-    },
+        }
+      ]
+    }
   },
 
   {
@@ -246,16 +247,42 @@ export default [
             type: 'number',
             min: 1,
             step: 2,
-          },
+          }
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
           hidden: true,
+        }
+      ]
+    }
+  },
+ 
+  {
+    category: 'morph',
+    name: 'gradient',
+    label: 'Gradient Morph',
+    conf: {
+      args: [
+        {
+          name: 'ksize',
+          label: 'Kernel',
+          defaultValue: 3,
+          input: {
+            type: 'number',
+            min: 1,
+            step: 2,
+          }
         },
-      ],
-    },
+        {
+          name: 'anchor',
+          label: 'Anchor',
+          defaultValue: -1,
+          hidden: true,
+        }
+      ]
+    }
   },
 
   // SMOOTHING
@@ -274,16 +301,16 @@ export default [
             type: 'number',
             min: 1,
             step: 2,
-          },
+          }
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
           hidden: true,
-        },
-      ],
-    },
+        }
+      ]
+    }
   },
 
   {
@@ -300,10 +327,10 @@ export default [
             type: 'number',
             min: 1,
             step: 2,
-          },
-        },
-      ],
-    },
+          }
+        }
+      ]
+    }
   },
 
   {
@@ -315,22 +342,62 @@ export default [
         {
           name: 'size',
           label: 'Size',
-          defaultValue: 7,
+          defaultValue: 5,
           input: {
             type: 'number',
             min: 1,
             step: 2,
-          },
+          }
         },
         {
           name: 'anchor',
           label: 'Anchor',
           defaultValue: -1,
           hidden: true,
-        },
-      ],
-    },
+        }
+      ]
+    }
   },
+  
+  // {
+  //   category: 'smooth',
+  //   name: 'bilateral',
+  //   label: 'Bilateral Blur',
+  //   conf: {
+  //     args: [
+  //       {
+  //         name: 'size',
+  //         label: 'Size',
+  //         defaultValue: 5,
+  //         input: {
+  //           type: 'number',
+  //           min: 1,
+  //           step: 2,
+  //         },
+  //       },
+  //       {
+  //         name: 'sigmaColor',
+  //         label: 'Sigma Color',
+  //         defaultValue: 1,
+  //         input: {
+  //           type: 'number',
+  //           min: 0,
+  //           step: 1,
+  //         },
+  //       },
+  //       {
+  //         name: 'sigmaSpace',
+  //         label: 'Sigma Space',
+  //         defaultValue: 1,
+  //         input: {
+  //           type: 'number',
+  //           min: 0,
+  //           step: 1,
+  //         },
+  //       },
+  //     ],
+  //   },
+  // },
 
   // THRESHOLD
 
@@ -348,8 +415,7 @@ export default [
             type: 'range',
             min: 0,
             max: 255,
-            inactiveValue: 'unchanged',
-          },
+          }
         },
         {
           name: 't2',
@@ -359,11 +425,110 @@ export default [
             type: 'range',
             min: 0,
             max: 255,
-            inactiveValue: 'unchanged',
-          },
-        },
+          }
+        }
       ]
-    },
+    }
+  },
+
+  {
+    category: 'threshold',
+    name: 'binaryInv',
+    label: 'Binary Threshold (Inverse)',
+    conf: {
+      args: [
+        {
+          name: 't1',
+          label: 'Threshold 1',
+          defaultValue: 100,
+          input: {
+            type: 'range',
+            min: 0,
+            max: 255,
+          }
+        },
+        {
+          name: 't2',
+          label: 'Threshold 2',
+          defaultValue: 0,
+          input: {
+            type: 'range',
+            min: 0,
+            max: 255,
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    category: 'threshold',
+    name: 'adaptiveMean',
+    label: 'Adaptive Mean Threshold',
+    conf: {
+      args: [
+        {
+          name: 'ksize',
+          label: 'Kernel',
+          defaultValue: 3,
+          input: {
+            type: 'number',
+            min: 3,
+            step: 2,
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    category: 'threshold',
+    name: 'adaptiveGaussian',
+    label: 'Adaptive "Gaussian" Threshold',
+    conf: {
+      args: [
+        {
+          name: 'ksize',
+          label: 'Kernel',
+          defaultValue: 3,
+          input: {
+            type: 'number',
+            min: 3,
+            step: 2,
+          }
+        }
+      ]
+    }
+  },
+
+  {
+    category: 'threshold',
+    name: 'inRange',
+    label: 'In-Range Threshold',
+    conf: {
+      args: [
+        {
+          name: 'lo',
+          label: 'Lower Bound',
+          defaultValue: 10,
+          input: {
+            type: 'range',
+            min: 0,
+            max: 255,
+          }
+        },
+        {
+          name: 'hi',
+          label: 'Upper Bound',
+          defaultValue: 100,
+          input: {
+            type: 'range',
+            min: 0,
+            max: 255,
+          }
+        }
+      ]
+    }
   },
 
 

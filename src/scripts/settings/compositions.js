@@ -87,6 +87,34 @@ export default [
         opts: {},
       }
     ]
-  }
+  },
+
+  {
+    label: 'Blue Edges',
+    transforms: [
+      {
+        category: 'morph',
+        name: 'gradient',
+        opts: {
+          ksize: 5,
+        }
+      },
+      {
+        category: 'alter',
+        name: 'setChannel',
+        opts: {
+          r: 'unchanged',
+          g: 'unchanged',
+          b: 0,
+          a: 'unchanged',
+        }
+      },
+      {
+        category: 'alter',
+        name: 'invert',
+        opts: {},
+      }
+    ]
+  },
 
 ];

@@ -1,16 +1,19 @@
 // https://docs.opencv.org/3.4.3/dd/d4d/tutorial_js_image_arithmetics.html
+import cacheController from '../render/CacheController';
 
 export default {
   absoluteDifference (conf) {
-    return function (src, dst) {
-      this.frameCount = this.frameCount || 0;
-      this.prevSrc = this.prevSrc || this.getBaseMat();
-      cv.absdiff(src, this.prevSrc, dst);
-      this.frameCount++;
+    const cache = cacheController.getCache(conf, 'absoluteDifference');
 
-      if (this.frameCount == 1) {
-        this.prevSrc.data.set(this.src.data);
-        this.frameCount = 0;
+    return function (src, dst) {
+      cache.use('frameCount', () => 0);
+      cache.use('prevSrc', this.getBaseMat);
+      cv.absdiff(src, cache.prevSrc, dst);
+      cache.frameCount++;
+
+      if (cache.frameCount == 1) {
+        cache.prevSrc.data.set(src.data);
+        cache.frameCount = 0;
       }
 
     }

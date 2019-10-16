@@ -147,7 +147,8 @@ export default {
     },
     resolveTransformOpts (item) {
       const argState = item.argState;
-      const opts = {};
+      // Every transform gets a unique ID injected into the conf so their otherwise identical cache IDs don't overlap
+      const opts = { uId: item.id };
 
       Object.keys(argState).forEach((k) => {
         const argSchema = item.schema.conf.args.find((arg) => arg.name === k);
